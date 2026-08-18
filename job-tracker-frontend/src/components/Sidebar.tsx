@@ -12,8 +12,7 @@ import {
   User,
   Settings,
   ChevronLeft,
-  ChevronRight,
-  Zap
+  ChevronRight
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -42,45 +41,44 @@ export default function Sidebar({ collapsed = false, onToggleCollapse }: Sidebar
 
   return (
     <aside
-      className={`hidden md:flex flex-col border-r border-violet-100 bg-white dark:border-haiti-800 dark:bg-haiti-950 transition-all duration-300 relative ${
-        collapsed ? 'w-20 px-2 py-6' : 'w-60 px-4 py-6'
+      className={`hidden md:flex flex-col border-r border-violet-100 bg-white dark:border-haiti-800 dark:bg-haiti-950 transition-all duration-200 relative ${
+        collapsed ? 'w-16 px-2 py-5' : 'w-56 px-3.5 py-5'
       }`}
     >
       {/* Collapse Toggle Button */}
       {onToggleCollapse && (
         <button
           onClick={onToggleCollapse}
-          className="absolute -right-3 top-7 z-20 flex h-6 w-6 items-center justify-center rounded-full border border-violet-200 bg-white text-slate-500 shadow-xs hover:text-violet-600 dark:border-haiti-800 dark:bg-haiti-900 dark:text-haiti-200 transition"
+          className="absolute -right-3 top-6 z-20 flex h-6 w-6 items-center justify-center rounded-full border border-violet-200 bg-white text-slate-400 hover:text-violet-600 dark:border-haiti-800 dark:bg-haiti-900 dark:text-haiti-300 transition"
           title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
         >
-          {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+          {collapsed ? <ChevronRight size={13} /> : <ChevronLeft size={13} />}
         </button>
       )}
 
-      {/* Brand Header */}
+      {/* Quiet Brand Header */}
       <div className={`mb-6 flex items-center ${collapsed ? 'justify-center' : 'justify-between px-2'}`}>
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-violet-500 text-white font-extrabold text-sm shadow-violet-glow">
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-violet-500 text-white font-bold text-xs">
             HL
           </div>
           {!collapsed && (
             <div>
-              <h1 className="text-base font-extrabold tracking-tight text-haiti-900 dark:text-white">
+              <h1 className="text-sm font-bold tracking-tight text-haiti-900 dark:text-white">
                 HireLog
               </h1>
-              <p className="text-[9px] font-bold text-violet-600 dark:text-violet-400 uppercase tracking-widest flex items-center gap-1">
-                <Zap size={9} className="fill-turbo-500 text-turbo-500" /> AI JOB OS
+              <p className="text-[9px] font-semibold text-slate-400 dark:text-haiti-300 uppercase tracking-wider">
+                Job Search OS
               </p>
             </div>
           )}
         </div>
-        {!collapsed && <span className="quantus-badge-turbo">2025</span>}
       </div>
 
       {/* Workspace Navigation */}
-      <nav className="flex flex-1 flex-col gap-1 overflow-y-auto">
+      <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto">
         {!collapsed && (
-          <div className="px-3 text-[10px] font-bold text-slate-400 dark:text-haiti-300 uppercase tracking-widest mb-1">
+          <div className="px-3 text-[10px] font-bold text-slate-400 dark:text-haiti-300 uppercase tracking-wider mb-1">
             Workspace
           </div>
         )}
@@ -94,21 +92,21 @@ export default function Sidebar({ collapsed = false, onToggleCollapse }: Sidebar
               end={item.to === '/'}
               title={collapsed ? item.label : undefined}
               className={({ isActive }) =>
-                `relative flex items-center gap-3 rounded-xl transition-all duration-150 text-xs font-semibold ${
-                  collapsed ? 'justify-center p-2.5' : 'px-3.5 py-2.5'
+                `relative flex items-center gap-2.5 rounded-lg transition-all duration-150 text-xs font-medium ${
+                  collapsed ? 'justify-center p-2' : 'px-3 py-2'
                 } ${
                   isActive
-                    ? 'bg-violet-50 text-violet-600 dark:bg-violet-950/60 dark:text-violet-300 font-bold'
-                    : 'text-slate-600 hover:bg-violet-50/60 hover:text-violet-600 dark:text-haiti-300 dark:hover:bg-haiti-900'
+                    ? 'bg-violet-500/8 text-violet-600 dark:bg-violet-950/40 dark:text-violet-300 font-semibold'
+                    : 'text-slate-600 hover:bg-violet-50/50 hover:text-violet-600 dark:text-haiti-300 dark:hover:bg-haiti-900'
                 }`
               }
             >
               {({ isActive }) => (
                 <>
                   {isActive && (
-                    <span className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-violet-500" />
+                    <span className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-violet-500" />
                   )}
-                  <Icon size={16} className={isActive ? 'text-violet-500' : 'text-slate-400 dark:text-haiti-300'} />
+                  <Icon size={15} className={isActive ? 'text-violet-500' : 'text-slate-400 dark:text-haiti-300'} />
                   {!collapsed && <span className="flex-1 truncate">{item.label}</span>}
                   {!collapsed && item.badge && (
                     <span className="quantus-badge-turbo">{item.badge}</span>
@@ -120,7 +118,7 @@ export default function Sidebar({ collapsed = false, onToggleCollapse }: Sidebar
         })}
 
         {/* Account Section */}
-        <div className={`mt-6 mb-1 ${collapsed ? 'hidden' : 'px-3 text-[10px] font-bold text-slate-400 dark:text-haiti-300 uppercase tracking-widest'}`}>
+        <div className={`mt-5 mb-1 ${collapsed ? 'hidden' : 'px-3 text-[10px] font-bold text-slate-400 dark:text-haiti-300 uppercase tracking-wider'}`}>
           Account
         </div>
         {accountItems.map((item) => {
@@ -132,21 +130,21 @@ export default function Sidebar({ collapsed = false, onToggleCollapse }: Sidebar
               to={item.to}
               title={collapsed ? item.label : undefined}
               className={({ isActive }) =>
-                `relative flex items-center gap-3 rounded-xl transition-all duration-150 text-xs font-semibold ${
-                  collapsed ? 'justify-center p-2.5' : 'px-3.5 py-2.5'
+                `relative flex items-center gap-2.5 rounded-lg transition-all duration-150 text-xs font-medium ${
+                  collapsed ? 'justify-center p-2' : 'px-3 py-2'
                 } ${
                   isActive
-                    ? 'bg-violet-50 text-violet-600 dark:bg-violet-950/60 dark:text-violet-300 font-bold'
-                    : 'text-slate-600 hover:bg-violet-50/60 hover:text-violet-600 dark:text-haiti-300 dark:hover:bg-haiti-900'
+                    ? 'bg-violet-500/8 text-violet-600 dark:bg-violet-950/40 dark:text-violet-300 font-semibold'
+                    : 'text-slate-600 hover:bg-violet-50/50 hover:text-violet-600 dark:text-haiti-300 dark:hover:bg-haiti-900'
                 }`
               }
             >
               {({ isActive }) => (
                 <>
                   {isActive && (
-                    <span className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-violet-500" />
+                    <span className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-violet-500" />
                   )}
-                  <Icon size={16} className={isActive ? 'text-violet-500' : 'text-slate-400 dark:text-haiti-300'} />
+                  <Icon size={15} className={isActive ? 'text-violet-500' : 'text-slate-400 dark:text-haiti-300'} />
                   {!collapsed && <span className="flex-1 truncate">{item.label}</span>}
                 </>
               )}

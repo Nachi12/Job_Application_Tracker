@@ -1,18 +1,16 @@
 import { useNavigate } from 'react-router-dom';
-
 import { JobApplication } from '../types/models';
 import { formatDate } from '../utils/dateUtils';
 import { JOB_STATUS_LABELS, PAGE_SIZE } from '../utils/constants';
 import Pagination from './Pagination';
 import { SkeletonRow } from './Skeleton';
-import { ExternalLink, Eye, Edit2, Trash2 } from 'lucide-react';
+import { ExternalLink, Edit2, Trash2 } from 'lucide-react';
 
 interface Props {
   jobs: JobApplication[];
   total: number;
   loading: boolean;
   page: number;
-  density?: 'comfortable' | 'compact';
   onPageChange: (page: number) => void;
   onEdit: (job: JobApplication) => void;
   onDelete: (job: JobApplication) => void;
@@ -23,27 +21,25 @@ export default function JobTable({
   total,
   loading,
   page,
-  density = 'comfortable',
   onPageChange,
   onEdit,
   onDelete
 }: Props) {
   const navigate = useNavigate();
-  const pyClass = density === 'compact' ? 'py-2' : 'py-3.5';
 
   return (
     <div className="quantus-card overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full text-left text-xs">
-          <thead className="border-b border-violet-100 bg-chalk text-[10px] font-extrabold uppercase tracking-wider text-haiti-900 dark:border-haiti-800 dark:bg-haiti-950 dark:text-haiti-300">
+          <thead className="border-b border-violet-100 bg-chalk text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:border-haiti-800 dark:bg-haiti-950 dark:text-haiti-300">
             <tr>
-              <th className="px-4 py-3">Company</th>
-              <th className="px-4 py-3">Role</th>
-              <th className="px-4 py-3">Pipeline Stage</th>
-              <th className="px-4 py-3">Source</th>
-              <th className="px-4 py-3">Applied Date</th>
-              <th className="px-4 py-3">Salary</th>
-              <th className="px-4 py-3 text-right">Actions</th>
+              <th className="px-4 py-2.5">Company</th>
+              <th className="px-4 py-2.5">Role</th>
+              <th className="px-4 py-2.5">Status</th>
+              <th className="px-4 py-2.5">Source</th>
+              <th className="px-4 py-2.5">Applied</th>
+              <th className="px-4 py-2.5">Salary</th>
+              <th className="px-4 py-2.5 text-right">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-violet-100 dark:divide-haiti-800/60">
@@ -54,9 +50,9 @@ export default function JobTable({
               <tr>
                 <td
                   colSpan={7}
-                  className="px-4 py-10 text-center text-xs text-slate-400 dark:text-haiti-300"
+                  className="px-4 py-8 text-center text-xs text-slate-400 dark:text-haiti-300"
                 >
-                  No applications found. Click "Add Application" to start tracking!
+                  No applications found. Click "Add Application" to start tracking.
                 </td>
               </tr>
                 )
@@ -67,10 +63,10 @@ export default function JobTable({
                   return (
                     <tr
                       key={jobId}
-                      className="group text-xs transition hover:bg-violet-50/50 dark:hover:bg-haiti-900/60"
+                      className="group text-xs transition hover:bg-violet-50/40 dark:hover:bg-haiti-900/60"
                     >
-                      <td className={`px-4 ${pyClass} font-extrabold text-haiti-900 dark:text-white`}>
-                        <div className="flex items-center gap-2">
+                      <td className="px-4 py-2.5 font-semibold text-haiti-900 dark:text-white">
+                        <div className="flex items-center gap-1.5">
                           <span>{company}</span>
                           {job.jobLink && (
                             <a
@@ -79,55 +75,48 @@ export default function JobTable({
                               rel="noreferrer"
                               className="text-slate-400 hover:text-violet-500 transition"
                             >
-                              <ExternalLink size={12} />
+                              <ExternalLink size={11} />
                             </a>
                           )}
                         </div>
                       </td>
-                      <td className={`px-4 ${pyClass} text-slate-700 dark:text-haiti-100 font-medium`}>
+                      <td className="px-4 py-2.5 text-slate-700 dark:text-haiti-100 font-medium">
                         <button
                           onClick={() => navigate(`/applications/${jobId}`)}
-                          className="hover:text-violet-500 font-extrabold text-left transition"
+                          className="hover:text-violet-600 font-semibold text-left transition"
                         >
                           {job.role}
                         </button>
                       </td>
-                      <td className={`px-4 ${pyClass}`}>
-                        <span className="inline-flex rounded-lg bg-violet-50 px-2.5 py-0.5 text-[11px] font-bold text-violet-600 dark:bg-haiti-800 dark:text-violet-300 border border-violet-200 dark:border-haiti-700">
+                      <td className="px-4 py-2.5">
+                        <span className="inline-flex rounded-md bg-violet-50 px-2 py-0.5 text-[11px] font-medium text-violet-600 dark:bg-haiti-800 dark:text-violet-300">
                           {JOB_STATUS_LABELS[job.status] || job.status}
                         </span>
                       </td>
-                      <td className={`px-4 ${pyClass} text-slate-500 dark:text-haiti-300 font-medium`}>
+                      <td className="px-4 py-2.5 text-slate-500 dark:text-haiti-300 font-normal">
                         {job.source || 'LinkedIn'}
                       </td>
-                      <td className={`px-4 ${pyClass} text-slate-500 dark:text-haiti-300`}>
+                      <td className="px-4 py-2.5 text-slate-500 dark:text-haiti-300 font-normal">
                         {job.appliedDate ? formatDate(job.appliedDate) : 'Saved'}
                       </td>
-                      <td className={`px-4 ${pyClass} text-haiti-900 dark:text-white font-semibold`}>
+                      <td className="px-4 py-2.5 text-haiti-900 dark:text-white font-medium">
                         {job.salary ? `$${job.salary.toLocaleString()}` : '-'}
                       </td>
-                      <td className={`px-4 ${pyClass} text-right`}>
-                        <div className="flex items-center justify-end gap-2">
-                          <button
-                            onClick={() => navigate(`/applications/${jobId}`)}
-                            title="View Detail Workspace"
-                            className="p-1.5 rounded-lg bg-chalk text-slate-500 hover:text-violet-600 hover:bg-violet-50 dark:bg-haiti-900 dark:text-haiti-200 transition"
-                          >
-                            <Eye size={14} />
-                          </button>
+                      <td className="px-4 py-2.5 text-right">
+                        <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => onEdit(job)}
                             title="Edit"
-                            className="p-1.5 rounded-lg bg-chalk text-slate-500 hover:text-haiti-900 hover:bg-violet-50 dark:bg-haiti-900 dark:text-haiti-200 transition"
+                            className="p-1 rounded-md text-slate-400 hover:text-haiti-900 hover:bg-violet-50 dark:hover:bg-haiti-900 dark:hover:text-white transition"
                           >
-                            <Edit2 size={14} />
+                            <Edit2 size={13} />
                           </button>
                           <button
                             onClick={() => onDelete(job)}
                             title="Delete"
-                            className="p-1.5 rounded-lg bg-chalk text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:bg-haiti-900 transition"
+                            className="p-1 rounded-md text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition"
                           >
-                            <Trash2 size={14} />
+                            <Trash2 size={13} />
                           </button>
                         </div>
                       </td>
