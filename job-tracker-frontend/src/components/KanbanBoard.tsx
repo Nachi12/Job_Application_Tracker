@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { JobApplication, JobStatus } from '../types/models';
-import { Calendar, MapPin, Building, Sparkles } from 'lucide-react';
+import { Calendar, MapPin, Building } from 'lucide-react';
 
 interface Props {
   jobs: JobApplication[];
@@ -50,7 +50,7 @@ export default function KanbanBoard({ jobs = [], onStatusChange }: Props) {
   };
 
   return (
-    <div className="grid gap-3 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 min-h-[600px] overflow-x-auto pb-4">
+    <div className="flex overflow-x-auto gap-4 pb-6 min-h-[600px] snap-x">
       {COLUMNS.map((col) => {
         const columnJobs = jobs.filter((j) => (j.status || 'Applied') === col.key);
         const isTarget = activeOverCol === col.key;
@@ -61,25 +61,25 @@ export default function KanbanBoard({ jobs = [], onStatusChange }: Props) {
             onDrop={(e) => handleDrop(e, col.key)}
             onDragOver={(e) => handleDragOver(e, col.key)}
             onDragLeave={handleDragLeave}
-            className={`flex flex-col rounded-2xl border p-3 transition-all duration-200 bg-white/70 dark:bg-haiti-900/60 border-violet-100 dark:border-haiti-800 ${
-              isTarget ? 'ring-2 ring-violet-500 scale-[1.02] shadow-violet-glow' : ''
+            className={`flex flex-col w-72 min-w-[280px] rounded-2xl border p-3.5 transition-all duration-200 bg-white/80 dark:bg-haiti-900/60 border-violet-100 dark:border-haiti-800 snap-start shrink-0 ${
+              isTarget ? 'ring-2 ring-violet-500 scale-[1.01] shadow-violet-glow' : ''
             }`}
           >
             {/* Column Header */}
             <div className="mb-3 flex items-center justify-between px-1">
-              <div className="flex items-center gap-1.5 font-bold text-xs text-haiti-900 dark:text-white">
+              <div className="flex items-center gap-1.5 font-extrabold text-xs text-haiti-900 dark:text-white">
                 <span>{col.label}</span>
               </div>
-              <span className={`flex h-5 min-w-[20px] px-1.5 items-center justify-center rounded-full text-[10px] font-extrabold ${col.headerBadgeClass}`}>
+              <span className={`flex h-5 min-w-[22px] px-2 items-center justify-center rounded-full text-[10px] font-extrabold ${col.headerBadgeClass}`}>
                 {columnJobs.length}
               </span>
             </div>
 
             {/* Cards List */}
-            <div className="flex flex-1 flex-col gap-2.5 overflow-y-auto max-h-[700px] pr-0.5">
+            <div className="flex flex-1 flex-col gap-3 overflow-y-auto max-h-[680px] pr-1">
               {columnJobs.length === 0 ? (
-                <div className="flex flex-1 items-center justify-center rounded-xl border border-dashed border-violet-200 dark:border-haiti-800 p-4 text-center">
-                  <p className="text-[11px] text-slate-400 dark:text-haiti-300">No jobs in {col.label}</p>
+                <div className="flex flex-1 items-center justify-center rounded-xl border border-dashed border-violet-200 dark:border-haiti-800 p-6 text-center">
+                  <p className="text-[11px] font-medium text-slate-400 dark:text-haiti-300">No jobs in {col.label}</p>
                 </div>
               ) : (
                 columnJobs.map((job) => {
@@ -90,10 +90,10 @@ export default function KanbanBoard({ jobs = [], onStatusChange }: Props) {
                       draggable
                       onDragStart={(e) => handleDragStart(e, jobId)}
                       onClick={() => navigate(`/applications/${jobId}`)}
-                      className="group cursor-pointer quantus-card p-3.5 space-y-2 relative border-l-4 border-l-violet-500 hover:scale-[1.01]"
+                      className="group cursor-pointer quantus-card p-4 space-y-2 relative border-l-4 border-l-violet-500 hover:scale-[1.01]"
                     >
                       <div className="flex items-start justify-between gap-1">
-                        <h4 className="font-bold text-xs text-haiti-900 dark:text-white group-hover:text-violet-500 dark:group-hover:text-violet-400 line-clamp-1">
+                        <h4 className="font-extrabold text-xs text-haiti-900 dark:text-white group-hover:text-violet-500 dark:group-hover:text-violet-400 line-clamp-1">
                           {job.role}
                         </h4>
                       </div>
