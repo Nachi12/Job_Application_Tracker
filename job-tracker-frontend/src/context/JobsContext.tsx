@@ -18,6 +18,7 @@ interface JobsContextValue {
   refresh: () => Promise<void>;
   create: (job: Partial<JobApplication>) => Promise<void>;
   update: (id: string, job: Partial<JobApplication>) => Promise<void>;
+  updateStatusOptimistic: (id: string, newStatus: JobStatus) => Promise<void>;
   remove: (id: string) => Promise<void>;
 }
 
@@ -25,8 +26,8 @@ const JobsContext = createContext<JobsContextValue | undefined>(undefined);
 
 const defaultFilters: JobFilters = {
   page: 1,
-  pageSize: 10,
-  sortBy: 'dateApplied',
+  pageSize: 50,
+  sortBy: 'appliedDate',
   sortDir: 'desc'
 };
 
@@ -61,34 +62,62 @@ export function JobsProvider({ children }: { children: ReactNode }) {
 
   const refresh = async () => load();
 
-const create = async (data: Partial<JobApplication>) => {
-  try {
-    const res = await jobsService.create(data);
+  const create = async (data: Partial<JobApplication>) => {
+    try {
+      const newJob = await jobsService.create(data);
+      setJobs((prev) => [newJob, ...prev]);
+      setTotal((prev) => prev + 1);
+      pushToast('success', 'Application added successfully');
+    } catch (e: any) {
+      pushToast('error', e.response?.data?.error || 'Failed to create application');
+    }
+  };
 
-    console.log("CREATE RESPONSE:", res); // 🔥 DEBUG
+  const update = async (id: string, data: Partial<JobApplication>) => {
+    try {
+      const updated = await jobsService.update(id, data);
+      setJobs((prev) => prev.map((j) => (j._id === id || j.id === id ? updated : j)));
+      pushToast('success', 'Application updated');
+    } catch (e: any) {
+      pushToast('error', 'Failed to update application');
+    }
+  };
 
-    const newJob = res.job || res;
+  const updateStatusOptimistic = async (id: string, newStatus: JobStatus) => {
+    // 1. Snapshot previous state for rollback
+    const previousJobs = [...jobs];
 
-    setJobs((prev) => [newJob, ...prev]);
-    setTotal((prev) => prev + 1);
+    // 2. Optimistically update local state
+    setJobs((prev) =>
+      prev.map((j) => {
+        const jobId = j._id || j.id;
+        if (jobId === id) {
+          return { ...j, status: newStatus };
+        }
+        return j;
+      })
+    );
 
-    pushToast('success', 'Application added');
-  } catch (e: any) {
-    console.error("CREATE ERROR:", e.response?.data || e.message); // 🔥 IMPORTANT
-    pushToast('error', e.response?.data?.error || 'Failed to create application');
-  }
-};
-
-  const update = async (id: string, job: Partial<JobApplication>) => {
-    await jobsService.update(id, job);
-    pushToast('success', 'Application updated');
-    await load();
+    // 3. Perform network mutation
+    try {
+      await jobsService.update(id, { status: newStatus });
+      pushToast('success', `Moved to ${newStatus}`);
+    } catch (e) {
+      // 4. Rollback on failure
+      setJobs(previousJobs);
+      pushToast('error', 'Failed to update status. Changes rolled back.');
+    }
   };
 
   const remove = async (id: string) => {
-    await jobsService.remove(id);
-    pushToast('success', 'Application deleted');
-    await load();
+    try {
+      await jobsService.remove(id);
+      setJobs((prev) => prev.filter((j) => j._id !== id && j.id !== id));
+      setTotal((prev) => prev - 1);
+      pushToast('success', 'Application deleted');
+    } catch (e) {
+      pushToast('error', 'Failed to delete application');
+    }
   };
 
   return (
@@ -102,6 +131,7 @@ const create = async (data: Partial<JobApplication>) => {
         refresh,
         create,
         update,
+        updateStatusOptimistic,
         remove
       }}
     >

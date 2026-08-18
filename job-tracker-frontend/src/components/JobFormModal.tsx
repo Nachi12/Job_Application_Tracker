@@ -18,72 +18,62 @@ export default function JobFormModal({
   const [form, setForm] = useState<any>({});
   const [saving, setSaving] = useState(false);
 
-  // 🔥 Initialize form
   useEffect(() => {
     if (initial) {
-      setForm(initial);
+      setForm({
+        ...initial,
+        company: initial.companyName,
+        dateApplied: initial.appliedDate ? new Date(initial.appliedDate).toISOString().slice(0, 10) : ''
+      });
     } else {
       setForm({
         company: '',
         role: '',
         jobLink: '',
-        status: 'APPLIED',
+        status: 'Applied',
         salary: '',
+        location: '',
+        recruiterName: '',
+        recruiterEmail: '',
+        jobDescription: '',
         dateApplied: new Date().toISOString().slice(0, 10),
-        interviewDate: '',
-        deadlineDate: '',
         notes: ''
       });
     }
-  }, [initial]);
+  }, [initial, open]);
 
-  // 🔥 Handle change
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-
-    setForm((prev: any) => ({
-      ...prev,
-      [name]: value
-    }));
+    setForm((prev: any) => ({ ...prev, [name]: value }));
   };
 
-  // 🔥 FINAL FIXED SUBMIT
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
 
     try {
       const payload = {
-        companyName: form.company?.trim(), // ✅ FIX
+        companyName: form.company?.trim(),
         role: form.role?.trim(),
         jobLink: form.jobLink || '',
-        status: form.status || 'APPLIED',
+        status: form.status || 'Applied',
+        location: form.location || '',
         salary: form.salary ? Number(form.salary) : 0,
-
+        recruiterName: form.recruiterName || '',
+        recruiterEmail: form.recruiterEmail || '',
+        jobDescription: form.jobDescription || '',
         appliedDate: form.dateApplied
           ? new Date(form.dateApplied).toISOString()
-          : new Date().toISOString(), // ✅ FIX
-
-        interviewDate: form.interviewDate
-          ? new Date(form.interviewDate).toISOString()
-          : undefined,
-
-        deadlineDate: form.deadlineDate
-          ? new Date(form.deadlineDate).toISOString()
-          : undefined,
-
+          : new Date().toISOString(),
         notes: form.notes || ''
       };
 
-      console.log("FINAL PAYLOAD:", payload);
-
       await onSubmit(payload);
-
       onClose();
     } catch (err) {
-      console.error("SUBMIT ERROR:", err);
+      console.error('SUBMIT ERROR:', err);
     } finally {
       setSaving(false);
     }
@@ -92,114 +82,132 @@ export default function JobFormModal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/40 p-4">
-      <div className="w-full max-w-lg rounded-xl bg-white p-5 shadow-xl">
-
-        {/* Header */}
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-sm font-semibold">
-            {initial ? 'Edit application' : 'Add new application'}
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-4">
+      <div className="w-full max-w-lg rounded-xl bg-white p-5 shadow-xl border border-slate-200 dark:border-slate-800 dark:bg-slate-900">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-sm font-bold text-slate-900 dark:text-slate-100">
+            {initial ? 'Edit Application' : 'Add New Application'}
           </h2>
-          <button onClick={onClose}>✕</button>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-600">✕</button>
         </div>
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-3 text-xs">
-
           <div className="grid gap-3 md:grid-cols-2">
-            <input
-              required
-              name="company"
-              placeholder="Company"
-              value={form.company ?? ''}
-              onChange={handleChange}
-              className="border px-2 py-1.5"
-            />
-
-            <input
-              required
-              name="role"
-              placeholder="Role"
-              value={form.role ?? ''}
-              onChange={handleChange}
-              className="border px-2 py-1.5"
-            />
+            <div>
+              <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">Company Name *</label>
+              <input
+                required
+                name="company"
+                placeholder="e.g. Google"
+                value={form.company ?? ''}
+                onChange={handleChange}
+                className="w-full rounded border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100"
+              />
+            </div>
+            <div>
+              <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">Role / Title *</label>
+              <input
+                required
+                name="role"
+                placeholder="e.g. Senior Frontend Engineer"
+                value={form.role ?? ''}
+                onChange={handleChange}
+                className="w-full rounded border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100"
+              />
+            </div>
           </div>
 
-          <input
-            name="jobLink"
-            placeholder="Job Link"
-            value={form.jobLink ?? ''}
-            onChange={handleChange}
-            className="w-full border px-2 py-1.5"
-          />
+          <div className="grid gap-3 md:grid-cols-2">
+            <div>
+              <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">Job URL</label>
+              <input
+                name="jobLink"
+                placeholder="https://..."
+                value={form.jobLink ?? ''}
+                onChange={handleChange}
+                className="w-full rounded border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100"
+              />
+            </div>
+            <div>
+              <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">Location</label>
+              <input
+                name="location"
+                placeholder="e.g. San Francisco, CA / Remote"
+                value={form.location ?? ''}
+                onChange={handleChange}
+                className="w-full rounded border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100"
+              />
+            </div>
+          </div>
 
           <div className="grid gap-3 md:grid-cols-3">
-            <select
-              name="status"
-              value={form.status ?? 'APPLIED'}
+            <div>
+              <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">Pipeline Stage</label>
+              <select
+                name="status"
+                value={form.status ?? 'Applied'}
+                onChange={handleChange}
+                className="w-full rounded border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 font-medium"
+              >
+                {JOB_STATUS_OPTIONS.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">Salary ($)</label>
+              <input
+                type="number"
+                name="salary"
+                placeholder="e.g. 140000"
+                value={form.salary ?? ''}
+                onChange={handleChange}
+                className="w-full rounded border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100"
+              />
+            </div>
+
+            <div>
+              <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">Date Applied</label>
+              <input
+                type="date"
+                name="dateApplied"
+                value={form.dateApplied ?? ''}
+                onChange={handleChange}
+                required
+                className="w-full rounded border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">Job Description</label>
+            <textarea
+              rows={3}
+              name="jobDescription"
+              placeholder="Paste job description for AI analysis..."
+              value={form.jobDescription ?? ''}
               onChange={handleChange}
-              className="border px-2 py-1.5"
+              className="w-full rounded border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100"
+            />
+          </div>
+
+          <div className="flex justify-end gap-2 pt-2">
+            <button
+              type="button"
+              onClick={onClose}
+              className="rounded-lg border border-slate-200 px-3.5 py-1.5 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300"
             >
-              {JOB_STATUS_OPTIONS.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
-
-            <input
-              type="number"
-              name="salary"
-              placeholder="Salary"
-              value={form.salary ?? ''}
-              onChange={handleChange}
-              className="border px-2 py-1.5"
-            />
-
-            <input
-              type="date"
-              name="dateApplied"
-              value={form.dateApplied ?? ''}
-              onChange={handleChange}
-              required
-              className="border px-2 py-1.5"
-            />
-          </div>
-
-          <div className="grid gap-3 md:grid-cols-2">
-            <input
-              type="date"
-              name="interviewDate"
-              value={form.interviewDate ?? ''}
-              onChange={handleChange}
-              className="border px-2 py-1.5"
-            />
-
-            <input
-              type="date"
-              name="deadlineDate"
-              value={form.deadlineDate ?? ''}
-              onChange={handleChange}
-              className="border px-2 py-1.5"
-            />
-          </div>
-
-          <textarea
-            name="notes"
-            placeholder="Notes"
-            value={form.notes ?? ''}
-            onChange={handleChange}
-            className="w-full border px-2 py-1.5"
-          />
-
-          <div className="flex justify-end gap-2">
-            <button type="button" onClick={onClose}>
               Cancel
             </button>
-
-            <button type="submit" disabled={saving}>
-              {saving ? 'Saving...' : 'Save'}
+            <button
+              type="submit"
+              disabled={saving}
+              className="rounded-lg bg-indigo-600 px-4 py-1.5 font-semibold text-white hover:bg-indigo-700 shadow-xs"
+            >
+              {saving ? 'Saving...' : 'Save Application'}
             </button>
           </div>
         </form>

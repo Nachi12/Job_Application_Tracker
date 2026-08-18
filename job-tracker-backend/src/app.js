@@ -8,6 +8,9 @@ import { env } from './config/env.js';
 import authRoutes from './routes/authRoutes.js';
 import jobRoutes from './routes/jobRoutes.js';
 import analyticsRoutes from './routes/analyticsRoutes.js';
+import aiRoutes from './routes/aiRoutes.js';
+import resumeRoutes from './routes/resumeRoutes.js';
+import reminderRoutes from './routes/reminderRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import { apiLimiter, authLimiter } from './middleware/rateLimiter.js';
 
@@ -52,6 +55,10 @@ export const createApp = () => {
   app.use('/api/auth', authRoutes);
   app.use('/api/jobs', jobRoutes);
   app.use('/api/analytics', analyticsRoutes);
+  app.use('/api/ai', aiRoutes);
+  app.use('/api/resumes', resumeRoutes);
+  app.use('/api/reminders', reminderRoutes);
+
 
   // Health check
   app.get('/health', (req, res) => {

@@ -1,15 +1,19 @@
-import { Router } from 'express';
-import { authMiddleware } from '../middleware/authMiddleware.js';
+import express from 'express';
+import { authenticate } from '../middleware/authMiddleware.js';
 import {
   getOverview,
-  getTrends
+  getFunnel,
+  getTrends,
+  getBySource
 } from '../controllers/analyticsController.js';
 
-const router = Router();
+const router = express.Router();
 
-router.use(authMiddleware);
+router.use(authenticate);
 
 router.get('/overview', getOverview);
+router.get('/funnel', getFunnel);
 router.get('/trends', getTrends);
+router.get('/sources', getBySource);
 
 export default router;

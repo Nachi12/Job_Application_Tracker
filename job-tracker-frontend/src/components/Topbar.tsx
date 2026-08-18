@@ -1,54 +1,116 @@
 import { useAuth } from '../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, NavLink } from 'react-router-dom';
 import DarkModeToggle from './DarkModeToggle';
-import { LogOut } from 'lucide-react';
+import { Search, Sparkles, LogOut, Plus } from 'lucide-react';
 
-export default function Topbar() {
+interface TopbarProps {
+  onOpenCommandPalette?: () => void;
+  onOpenAddJob?: () => void;
+}
+
+export default function Topbar({ onOpenCommandPalette, onOpenAddJob }: TopbarProps) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
 
+  const getPageTitle = () => {
+    const path = location.pathname;
+    if (path === '/') return 'Dashboard';
+    if (path === '/applications') return 'Applications';
+    if (path === '/kanban') return 'Kanban Pipeline';
+    if (path === '/intelligence') return 'Job Intelligence';
+    if (path === '/interview-prep') return 'Interview Prep';
+    if (path === '/resumes') return 'Resumes';
+    if (path === '/analytics') return 'Analytics';
+    if (path === '/reminders') return 'Reminders';
+    if (path === '/profile') return 'Profile';
+    if (path === '/settings') return 'Settings';
+    return 'HireLog OS';
+  };
+
   return (
-    <header className="flex items-center justify-between border-b border-gray-200 bg-white px-6 py-3 dark:border-gray-800 dark:bg-gray-900">
-      
-      {/* Left */}
-      <div className="text-sm text-gray-500 dark:text-gray-400">
-        Keep track of every application.
+    <header className="flex items-center justify-between border-b border-violet-100 bg-white/80 backdrop-blur-md px-6 py-3 dark:border-haiti-800 dark:bg-haiti-950/80 sticky top-0 z-30">
+      {/* Left Title & Breadcrumb */}
+      <div>
+        <h2 className="text-base font-extrabold tracking-tight text-haiti-900 dark:text-white">
+          {getPageTitle()}
+        </h2>
+        <p className="text-[11px] font-semibold text-violet-600 dark:text-violet-400">
+          Good evening, {user?.name?.split(' ')[0] || 'User'}
+        </p>
       </div>
 
-      {/* Right */}
-      <div className="flex items-center gap-4">
+      {/* Center Search / Cmd+K Launcher */}
+      <div className="hidden lg:flex items-center">
+        <button
+          onClick={onOpenCommandPalette}
+          className="flex items-center gap-3 w-80 rounded-xl border border-violet-200 bg-chalk px-3.5 py-1.5 text-xs text-slate-500 hover:border-violet-400 transition dark:border-haiti-800 dark:bg-haiti-900 dark:text-haiti-300"
+        >
+          <Search size={14} className="text-violet-500" />
+          <span className="flex-1 text-left">Search applications, roles...</span>
+          <kbd className="rounded-md bg-white px-1.5 py-0.5 text-[10px] font-bold text-slate-400 border border-violet-100 dark:border-haiti-800 dark:bg-haiti-950">
+            ⌘K
+          </kbd>
+        </button>
+      </div>
+
+      {/* Right Actions */}
+      <div className="flex items-center gap-3">
+        {/* AI Action Button */}
+        <button
+          onClick={() => navigate('/intelligence')}
+          className="flex items-center gap-1.5 rounded-xl bg-violet-500 px-3 py-1.5 text-xs font-bold text-white shadow-violet-glow hover:bg-violet-600 transition"
+        >
+          <Sparkles size={14} className="text-turbo-500 fill-turbo-500" />
+          <span>HireLog AI</span>
+        </button>
+
+        {/* Quick Add Job Button */}
+        {onOpenAddJob && (
+          <button
+            onClick={onOpenAddJob}
+            className="flex items-center gap-1 rounded-xl bg-turbo-500 px-3 py-1.5 text-xs font-black text-haiti-900 hover:bg-turbo-400 transition shadow-turbo-glow"
+          >
+            <Plus size={14} />
+            <span className="hidden sm:inline">Add Job</span>
+          </button>
+        )}
 
         {/* Dark mode */}
         <DarkModeToggle />
 
-        {/* User */}
-        <div className="hidden items-center gap-3 md:flex">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-200 text-xs font-semibold text-gray-700 dark:bg-gray-700 dark:text-gray-200">
+        {/* User Info Avatar Button -> Navigates to Profile */}
+        <NavLink
+          to="/profile"
+          title="Open Profile Settings"
+          className="hidden items-center gap-2.5 md:flex p-1 rounded-xl hover:bg-violet-50 dark:hover:bg-haiti-900 transition cursor-pointer group"
+        >
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-violet-500 text-xs font-bold text-white shadow-xs group-hover:scale-105 transition">
             {user?.name ? user.name[0].toUpperCase() : 'U'}
           </div>
 
-          <div className="leading-tight">
-            <p className="text-sm font-medium text-gray-900 dark:text-white">
+          <div className="leading-tight text-left">
+            <p className="text-xs font-bold text-haiti-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-400 transition">
               {user?.name || 'User'}
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-[10px] text-slate-500 dark:text-haiti-300">
               {user?.email}
             </p>
           </div>
-        </div>
+        </NavLink>
 
         {/* Logout */}
         <button
           onClick={handleLogout}
-          className="flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:bg-gray-100 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
+          title="Logout"
+          className="flex items-center justify-center p-2 rounded-xl border border-violet-200 bg-chalk text-slate-500 hover:text-rose-600 dark:border-haiti-800 dark:bg-haiti-900 dark:text-haiti-300 transition"
         >
-          <LogOut size={14} />
-          Logout
+          <LogOut size={15} />
         </button>
       </div>
     </header>

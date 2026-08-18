@@ -8,10 +8,15 @@ import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import ResetPasswordPage from './pages/auth/ResetPasswordPage';
 import DashboardPage from './pages/DashboardPage';
 import ApplicationsPage from './pages/ApplicationsPage';
+import ApplicationDetailPage from './pages/ApplicationDetailPage';
 import KanbanPage from './pages/KanbanPage';
-import CalendarPage from './pages/CalendarPage';
+import JobIntelligencePage from './pages/JobIntelligencePage';
+import InterviewPrepPage from './pages/InterviewPrepPage';
+import ResumesPage from './pages/ResumesPage';
+import RemindersPage from './pages/RemindersPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import ProfilePage from './pages/ProfilePage';
+import SettingsPage from './pages/SettingsPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 function ProtectedRoute({ children }: { children: ReactNode }) {
@@ -20,7 +25,7 @@ function ProtectedRoute({ children }: { children: ReactNode }) {
   if (loading) {
     return (
       <div className="flex h-screen items-center justify-center">
-        <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-violet-500 border-t-transparent" />
       </div>
     );
   }
@@ -50,10 +55,15 @@ export default function App() {
       >
         <Route index element={<DashboardPage />} />
         <Route path="applications" element={<ApplicationsPage />} />
+        <Route path="applications/:id" element={<ApplicationDetailPage />} />
         <Route path="kanban" element={<KanbanPage />} />
-        <Route path="calendar" element={<CalendarPage />} />
+        <Route path="intelligence" element={<JobIntelligencePage />} />
+        <Route path="interview-prep" element={<InterviewPrepPage />} />
+        <Route path="resumes" element={<ResumesPage />} />
+        <Route path="reminders" element={<RemindersPage />} />
         <Route path="analytics" element={<AnalyticsPage />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="settings" element={<SettingsPage />} />
       </Route>
 
       <Route path="*" element={<NotFoundPage />} />

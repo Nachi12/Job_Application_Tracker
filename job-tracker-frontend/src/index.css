@@ -1,6 +1,123 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body {
-  font-family: Inter, system-ui, sans-serif;
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #F5F3FF;
+    color: #18102B;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .dark body {
+    background-color: #18102B;
+    color: #F5F3FF;
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(131, 77, 251, 0.2);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(131, 77, 251, 0.5);
+}
+
+/* Quantus Palette 2025 Component Classes */
+.quantus-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(24, 16, 43, 0.10);
+  box-shadow: 0 4px 18px -2px rgba(24, 16, 43, 0.04);
+  border-radius: 1rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .quantus-card {
+  background: #21163F;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 25px -2px rgba(0, 0, 0, 0.4);
+}
+
+.quantus-card:hover {
+  border-color: rgba(131, 77, 251, 0.3);
+}
+
+.quantus-btn-primary {
+  background-color: #834DFB;
+  color: #FFFFFF;
+  font-weight: 700;
+  border-radius: 0.625rem;
+  transition: all 0.15s ease-in-out;
+  box-shadow: 0 4px 14px 0 rgba(131, 77, 251, 0.35);
+}
+
+.quantus-btn-primary:hover {
+  background-color: #6F38E8;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px 0 rgba(131, 77, 251, 0.45);
+}
+
+.quantus-btn-secondary {
+  background-color: #FFFFFF;
+  color: #18102B;
+  border: 1px solid rgba(24, 16, 43, 0.15);
+  font-weight: 600;
+  border-radius: 0.625rem;
+  transition: all 0.15s ease-in-out;
+}
+
+.dark .quantus-btn-secondary {
+  background-color: #21163F;
+  color: #F5F3FF;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.quantus-btn-secondary:hover {
+  background-color: rgba(131, 77, 251, 0.06);
+  border-color: #834DFB;
+}
+
+.quantus-badge-turbo {
+  background-color: #F0E100;
+  color: #18102B;
+  font-weight: 800;
+  border-radius: 0.375rem;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+}
+
+.quantus-badge-violet {
+  background-color: rgba(131, 77, 251, 0.12);
+  color: #834DFB;
+  font-weight: 700;
+  border-radius: 0.375rem;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.7rem;
+}
+
+/* Modal Backdrops & Animation */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-scale {
+  animation: fadeInScale 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

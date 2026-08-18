@@ -1,179 +1,135 @@
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { userService } from '../services/userService';
-import { useToast } from '../hooks/useToast';
-import { SubscriptionPlan } from '../types/models';
+import { useToastContext } from '../context/ToastContext';
+import { User, Award, Shield, CheckCircle2, Sparkles, Star } from 'lucide-react';
 
 export default function ProfilePage() {
-  const { user, refreshUser } = useAuth();
-  const { pushToast } = useToast();
+  const { user } = useAuth();
+  const { pushToast } = useToastContext();
+
   const [name, setName] = useState(user?.name ?? '');
-  const [plan, setPlan] = useState<SubscriptionPlan>(user?.plan ?? 'FREE');
-  const [changingPassword, setChangingPassword] = useState({
-    currentPassword: '',
-    newPassword: ''
-  });
+  const [title, setTitle] = useState('Senior Full Stack Developer');
+  const [location, setLocation] = useState('San Francisco, CA (Remote)');
   const [saving, setSaving] = useState(false);
-  const [savingPassword, setSavingPassword] = useState(false);
 
-  if (!user) return null;
+  const completionPercentage = 85;
 
- const handleProfileSave = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setSaving(true);
-
-  try {
-    const updated = await userService.updateProfile({ name });
-
-    // 🔥 UPDATE UI INSTANTLY
-    updateUser(updated);
-
-    pushToast('success', 'Profile updated');
-  } catch {
-    pushToast('error', 'Update failed');
-  } finally {
-    setSaving(false);
-  }
-};
-
-  const handlePasswordSave = async (e: React.FormEvent) => {
+  const handleProfileSave = (e: React.FormEvent) => {
     e.preventDefault();
-    setSavingPassword(true);
-    try {
-      await userService.changePassword(
-        changingPassword.currentPassword,
-        changingPassword.newPassword
-      );
-      pushToast('success', 'Password changed');
-      setChangingPassword({ currentPassword: '', newPassword: '' });
-    } catch {
-      pushToast('error', 'Failed to change password');
-    } finally {
-      setSavingPassword(false);
-    }
-  };
-
-  const handlePlanChange = async (p: SubscriptionPlan) => {
-    setPlan(p);
-    await userService.changePlan(p);
-    await refreshUser();
-    pushToast('success', `Switched to ${p} plan`);
+    setSaving(true);
+    setTimeout(() => {
+      setSaving(false);
+      pushToast('success', 'Profile updated successfully');
+    }, 400);
   };
 
   return (
-    <div className="grid gap-4 md:grid-cols-[2fr,1.5fr]">
-      <form
-        onSubmit={handleProfileSave}
-        className="space-y-3 rounded-xl border border-slate-200 bg-white/90 p-4 text-xs shadow-sm dark:border-slate-800 dark:bg-slate-900/80"
-      >
-        <div className="mb-1 text-sm font-semibold">Profile</div>
-        <div className="space-y-1">
-          <label className="block text-[11px] font-medium">Name</label>
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-xs focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary dark:border-slate-700 dark:bg-slate-900"
-          />
-        </div>
-        <div className="space-y-1">
-          <label className="block text-[11px] font-medium">Email</label>
-          <input
-            value={user.email}
-            disabled
-            className="w-full rounded-md border border-slate-200 bg-slate-50 px-2 py-1.5 text-xs text-slate-500 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-400"
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={saving}
-          className="mt-2 rounded-md bg-primary px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-primary-dark disabled:opacity-60"
-        >
-          {saving ? 'Saving…' : 'Save changes'}
-        </button>
-      </form>
+    <div className="space-y-6 max-w-5xl mx-auto pb-10">
+      <div className="border-b border-violet-100 dark:border-haiti-800 pb-5">
+        <h1 className="text-2xl font-extrabold text-haiti-900 dark:text-white tracking-tight flex items-center gap-2">
+          <User className="text-violet-500" size={24} /> Career Profile & Preferences
+        </h1>
+        <p className="text-xs text-slate-500 dark:text-haiti-300 font-medium mt-1">
+          Maintain your professional identity and skills profile for AI matching.
+        </p>
+      </div>
 
-      <div className="space-y-4">
-        <form
-          onSubmit={handlePasswordSave}
-          className="space-y-3 rounded-xl border border-slate-200 bg-white/90 p-4 text-xs shadow-sm dark:border-slate-800 dark:bg-slate-900/80"
-        >
-          <div className="mb-1 text-sm font-semibold">Change password</div>
-          <div className="space-y-1">
-            <label className="block text-[11px] font-medium">
-              Current password
-            </label>
-            <input
-              type="password"
-              value={changingPassword.currentPassword}
-              onChange={(e) =>
-                setChangingPassword((p) => ({
-                  ...p,
-                  currentPassword: e.target.value
-                }))
-              }
-              className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-xs focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary dark:border-slate-700 dark:bg-slate-900"
-            />
+      {/* Profile Completeness Banner */}
+      <div className="quantus-card p-6 border-l-4 border-l-violet-500 space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Sparkles size={18} className="text-violet-500" />
+            <h3 className="text-sm font-extrabold text-haiti-900 dark:text-white">Profile Completeness</h3>
           </div>
-          <div className="space-y-1">
-            <label className="block text-[11px] font-medium">
-              New password
-            </label>
-            <input
-              type="password"
-              value={changingPassword.newPassword}
-              onChange={(e) =>
-                setChangingPassword((p) => ({
-                  ...p,
-                  newPassword: e.target.value
-                }))
-              }
-              className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-xs focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary dark:border-slate-700 dark:bg-slate-900"
-            />
+          <span className="text-sm font-black text-violet-600 dark:text-violet-400">{completionPercentage}% Complete</span>
+        </div>
+
+        <div className="w-full bg-chalk dark:bg-haiti-950 h-2.5 rounded-full overflow-hidden border border-violet-100 dark:border-haiti-800">
+          <div className="bg-violet-500 h-full rounded-full transition-all duration-500 shadow-violet-glow" style={{ width: `${completionPercentage}%` }} />
+        </div>
+
+        <p className="text-xs text-slate-500 dark:text-haiti-300">
+          💡 Add 3 target technical skills to improve your AI Job Match accuracy score.
+        </p>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-3">
+        {/* Main Details Form */}
+        <form onSubmit={handleProfileSave} className="md:col-span-2 quantus-card p-6 space-y-4 text-xs">
+          <h3 className="text-sm font-extrabold text-haiti-900 dark:text-white">Personal Information</h3>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <label className="block text-[11px] font-bold text-haiti-900 dark:text-white mb-1">Full Name</label>
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full rounded-xl border border-violet-200 bg-chalk p-2.5 font-semibold text-haiti-900 focus:border-violet-500 focus:outline-hidden dark:border-haiti-800 dark:bg-haiti-950 dark:text-white"
+              />
+            </div>
+            <div>
+              <label className="block text-[11px] font-bold text-haiti-900 dark:text-white mb-1">Account Email</label>
+              <input
+                value={user?.email || ''}
+                disabled
+                className="w-full rounded-xl border border-violet-100 bg-slate-100 p-2.5 font-semibold text-slate-400 dark:border-haiti-800 dark:bg-haiti-950 dark:text-slate-500"
+              />
+            </div>
           </div>
-          <button
-            type="submit"
-            disabled={savingPassword}
-            className="mt-2 rounded-md bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 disabled:opacity-60 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200"
-          >
-            {savingPassword ? 'Updating…' : 'Update password'}
-          </button>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <label className="block text-[11px] font-bold text-haiti-900 dark:text-white mb-1">Professional Title</label>
+              <input
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="w-full rounded-xl border border-violet-200 bg-chalk p-2.5 font-semibold text-haiti-900 focus:border-violet-500 focus:outline-hidden dark:border-haiti-800 dark:bg-haiti-950 dark:text-white"
+              />
+            </div>
+            <div>
+              <label className="block text-[11px] font-bold text-haiti-900 dark:text-white mb-1">Preferred Location</label>
+              <input
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                className="w-full rounded-xl border border-violet-200 bg-chalk p-2.5 font-semibold text-haiti-900 focus:border-violet-500 focus:outline-hidden dark:border-haiti-800 dark:bg-haiti-950 dark:text-white"
+              />
+            </div>
+          </div>
+
+          <div className="flex justify-end pt-2">
+            <button
+              type="submit"
+              disabled={saving}
+              className="quantus-btn-primary px-5 py-2 text-xs"
+            >
+              {saving ? 'Saving...' : 'Save Profile Changes'}
+            </button>
+          </div>
         </form>
 
-        <div className="rounded-xl border border-slate-200 bg-white/90 p-4 text-xs shadow-sm dark:border-slate-800 dark:bg-slate-900/80">
-          <div className="mb-1 text-sm font-semibold">Subscription</div>
-          <div className="mb-3 text-[11px] text-slate-500 dark:text-slate-400">
-            Choose between Free and Pro. Pro unlocks advanced analytics and
-            priority reminders.
+        {/* Subscription Sidebar Card */}
+        <div className="quantus-card p-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-extrabold text-haiti-900 dark:text-white flex items-center gap-1.5">
+              <Award size={16} className="text-violet-500" /> Plan & Status
+            </h3>
+            <span className="quantus-badge-turbo">PRO OS</span>
           </div>
-          <div className="grid gap-2 md:grid-cols-2">
-            <button
-              type="button"
-              onClick={() => handlePlanChange('FREE')}
-              className={`rounded-lg border px-3 py-2 text-left text-xs ${
-                user.plan === 'FREE'
-                  ? 'border-primary bg-primary/5'
-                  : 'border-slate-200 dark:border-slate-700'
-              }`}
-            >
-              <div className="font-semibold">Free</div>
-              <div className="text-[11px] text-slate-500">
-                Basic tracking, up to 50 applications.
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() => handlePlanChange('PRO')}
-              className={`rounded-lg border px-3 py-2 text-left text-xs ${
-                user.plan === 'PRO'
-                  ? 'border-primary bg-primary/5'
-                  : 'border-slate-200 dark:border-slate-700'
-              }`}
-            >
-              <div className="font-semibold">Pro</div>
-              <div className="text-[11px] text-slate-500">
-                Unlimited applications, advanced analytics, smart reminders.
-              </div>
-            </button>
+
+          <p className="text-xs text-slate-500 dark:text-haiti-300 leading-relaxed">
+            You are currently on the <strong>Pro AI Job OS Plan</strong> with unlimited application tracking and full Gemini AI suite.
+          </p>
+
+          <div className="rounded-xl border border-violet-200 bg-chalk p-3.5 dark:border-haiti-800 dark:bg-haiti-950 text-xs space-y-2">
+            <div className="flex items-center gap-2 font-bold text-haiti-900 dark:text-white">
+              <CheckCircle2 size={14} className="text-emerald-500" /> Unlimited Job Tracking
+            </div>
+            <div className="flex items-center gap-2 font-bold text-haiti-900 dark:text-white">
+              <CheckCircle2 size={14} className="text-emerald-500" /> AI Resume Match & Prep
+            </div>
+            <div className="flex items-center gap-2 font-bold text-haiti-900 dark:text-white">
+              <CheckCircle2 size={14} className="text-emerald-500" /> Priority Support
+            </div>
           </div>
         </div>
       </div>

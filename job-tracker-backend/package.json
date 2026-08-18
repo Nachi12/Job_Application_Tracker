@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon src/server.js",
     "start": "NODE_ENV=production node src/server.js",
-    "test": "NODE_ENV=test jest --runInBand"
+    "test": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --runInBand"
+
   },
   "dependencies": {
     "autoprefixer": "^10.4.27",

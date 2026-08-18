@@ -1,17 +1,18 @@
 import { useState } from 'react';
-import { useJobs } from '../hooks/useJobs';
+import { useJobsContext } from '../context/JobsContext';
 import JobTable from '../components/JobTable';
 import JobFormModal from '../components/JobFormModal';
 import { JobApplication, JobStatus } from '../types/models';
 import { JOB_STATUS_OPTIONS, PAGE_SIZE } from '../utils/constants';
-import { useToast } from '../hooks/useToast';
+import { exportJobsToCsv } from '../utils/csvExport';
+import { Plus, Search, Download, LayoutList, AlignJustify } from 'lucide-react';
 
 export default function ApplicationsPage() {
   const { jobs, total, loading, filters, setFilters, create, update, remove } =
-    useJobs();
-  const { pushToast } = useToast();
+    useJobsContext();
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<JobApplication | null>(null);
+  const [density, setDensity] = useState<'comfortable' | 'compact'>('comfortable');
 
   const handleCreate = () => {
     setEditing(null);
@@ -24,26 +25,21 @@ export default function ApplicationsPage() {
   };
 
   const handleDelete = async (job: JobApplication) => {
-    if (confirm(`Delete application for ${job.company}?`)) {
-      await remove(job.id);
+    const id = job._id || job.id;
+    if (confirm(`Delete application for ${job.companyName || (job as any).company}?`)) {
+      await remove(id);
     }
   };
-const handleSubmit = async (data: Partial<JobApplication>) => {
-  try {
+
+  const handleSubmit = async (data: Partial<JobApplication>) => {
     if (editing) {
-      await update(editing.id, data);
-      pushToast('success', 'Application updated');
+      const id = editing._id || editing.id;
+      await update(id, data);
     } else {
       await create(data);
-      pushToast('success', 'Application added');
     }
-
-    setModalOpen(false); // 🔥 CLOSE MODAL
-
-  } catch (err) {
-    pushToast('error', 'Something went wrong');
-  }
-};
+    setModalOpen(false);
+  };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilters({ search: e.target.value });
@@ -54,67 +50,93 @@ const handleSubmit = async (data: Partial<JobApplication>) => {
     setFilters({ status: v === 'ALL' ? undefined : v });
   };
 
-  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const [sortBy, sortDir] = e.target.value.split(':') as [
-      'dateApplied' | 'status',
-      'asc' | 'desc'
-    ];
-    setFilters({ sortBy, sortDir });
-  };
-
   return (
-    <div className="space-y-4">
-      <div className="flex flex-col justify-between gap-2 md:flex-row md:items-center">
-        <div className="space-y-1">
-          <h1 className="text-lg font-semibold">Applications</h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
-            Add, search, and manage all your job applications.
+    <div className="space-y-5 pb-10">
+      {/* Page Header */}
+      <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center border-b border-violet-100 dark:border-haiti-800 pb-5">
+        <div>
+          <h1 className="text-2xl font-extrabold text-haiti-900 dark:text-white tracking-tight">
+            Job Applications Portfolio
+          </h1>
+          <p className="text-xs text-slate-500 dark:text-haiti-300 font-medium mt-0.5">
+            Track, filter, and manage every job opportunity in one place.
           </p>
         </div>
-        <button
-          onClick={handleCreate}
-          className="rounded-md bg-primary px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-primary-dark"
-        >
-          Add application
-        </button>
+        <div className="flex items-center gap-2.5">
+          {jobs.length > 0 && (
+            <button
+              onClick={() => exportJobsToCsv(jobs)}
+              className="quantus-btn-secondary px-3.5 py-2 text-xs flex items-center gap-1.5"
+            >
+              <Download size={14} /> Export CSV
+            </button>
+          )}
+          <button
+            onClick={handleCreate}
+            className="quantus-btn-primary px-4 py-2 text-xs flex items-center gap-1.5"
+          >
+            <Plus size={15} /> Add Application
+          </button>
+        </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2 text-xs">
-        <input
-          placeholder="Search by company or role…"
-          className="w-full min-w-[200px] flex-1 rounded-md border border-slate-200 px-2 py-1.5 text-xs focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary dark:border-slate-700 dark:bg-slate-900"
-          value={filters.search ?? ''}
-          onChange={handleSearchChange}
-        />
-        <select
-          value={filters.status ?? 'ALL'}
-          onChange={handleStatusChange}
-          className="rounded-md border border-slate-200 px-2 py-1.5 text-xs dark:border-slate-700 dark:bg-slate-900"
-        >
-          <option value="ALL">All statuses</option>
-          {JOB_STATUS_OPTIONS.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
-        <select
-          value={`${filters.sortBy}:${filters.sortDir}`}
-          onChange={handleSortChange}
-          className="rounded-md border border-slate-200 px-2 py-1.5 text-xs dark:border-slate-700 dark:bg-slate-900"
-        >
-          <option value="dateApplied:desc">Newest first</option>
-          <option value="dateApplied:asc">Oldest first</option>
-          <option value="status:asc">Status A-Z</option>
-          <option value="status:desc">Status Z-A</option>
-        </select>
+      {/* Filter & View Mode Controls */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-2 flex-1 text-xs">
+          <div className="relative min-w-[240px] flex-1">
+            <Search size={14} className="absolute left-3 top-2.5 text-violet-500" />
+            <input
+              placeholder="Search by company, role, location, or tag..."
+              className="w-full rounded-xl border border-violet-200 bg-white pl-9 pr-3 py-2 text-xs font-medium text-haiti-900 focus:border-violet-500 focus:outline-hidden dark:border-haiti-800 dark:bg-haiti-900 dark:text-white"
+              value={filters.search ?? ''}
+              onChange={handleSearchChange}
+            />
+          </div>
+
+          <select
+            value={filters.status ?? 'ALL'}
+            onChange={handleStatusChange}
+            className="rounded-xl border border-violet-200 bg-white px-3 py-2 text-xs font-bold text-haiti-900 dark:border-haiti-800 dark:bg-haiti-900 dark:text-white"
+          >
+            <option value="ALL">All Pipeline Stages</option>
+            {JOB_STATUS_OPTIONS.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* View Density Switcher */}
+        <div className="flex items-center gap-1 p-1 rounded-xl border border-violet-100 bg-chalk dark:border-haiti-800 dark:bg-haiti-900">
+          <button
+            onClick={() => setDensity('comfortable')}
+            title="Comfortable View"
+            className={`p-1.5 rounded-lg transition ${
+              density === 'comfortable' ? 'bg-white shadow-xs text-violet-500 dark:bg-haiti-800' : 'text-slate-400'
+            }`}
+          >
+            <LayoutList size={15} />
+          </button>
+          <button
+            onClick={() => setDensity('compact')}
+            title="Compact View"
+            className={`p-1.5 rounded-lg transition ${
+              density === 'compact' ? 'bg-white shadow-xs text-violet-500 dark:bg-haiti-800' : 'text-slate-400'
+            }`}
+          >
+            <AlignJustify size={15} />
+          </button>
+        </div>
       </div>
 
+      {/* Applications Table */}
       <JobTable
         jobs={jobs}
         total={total}
         loading={loading}
         page={filters.page ?? 1}
+        density={density}
         onPageChange={(page) => setFilters({ page, pageSize: PAGE_SIZE })}
         onEdit={handleEdit}
         onDelete={handleDelete}
