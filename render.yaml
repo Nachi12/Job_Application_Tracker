@@ -1,0 +1,22 @@
+services:
+  # Node/Express Backend Web Service
+  - type: web
+    name: job-tracker-backend
+    env: node
+    rootDir: job-tracker-backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+  # React Static Site Frontend
+  - type: static
+    name: job-tracker-frontend
+    rootDir: job-tracker-frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
