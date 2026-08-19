@@ -60,7 +60,11 @@ export const createApp = () => {
   app.use('/api/reminders', reminderRoutes);
 
 
-  // Health check
+  // Root & Health check
+  app.get('/', (req, res) => {
+    res.json({ status: 'ok', message: 'Job Application Tracker API' });
+  });
+
   app.get('/health', (req, res) => {
     res.json({ status: 'ok' });
   });
