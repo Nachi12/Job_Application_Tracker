@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useToastContext } from '../context/ToastContext';
-import { User, Award, Shield, CheckCircle2, Sparkles, Star } from 'lucide-react';
+import { User, Award, CheckCircle2, Sparkles } from 'lucide-react';
 
 export default function ProfilePage() {
   const { user } = useAuth();
@@ -24,28 +24,28 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto pb-10">
-      <div className="border-b border-violet-100 dark:border-haiti-800 pb-5">
-        <h1 className="text-2xl font-extrabold text-haiti-900 dark:text-white tracking-tight flex items-center gap-2">
-          <User className="text-violet-500" size={24} /> Career Profile & Preferences
+    <div className="space-y-5 max-w-5xl mx-auto pb-10">
+      <div className="border-b border-violet-100 dark:border-haiti-800 pb-4">
+        <h1 className="text-xl font-bold text-haiti-900 dark:text-white tracking-tight flex items-center gap-2">
+          <User className="text-violet-500" size={20} /> Career Profile & Preferences
         </h1>
-        <p className="text-xs text-slate-500 dark:text-haiti-300 font-medium mt-1">
+        <p className="text-xs text-slate-500 dark:text-haiti-300 font-normal mt-0.5">
           Maintain your professional identity and skills profile for AI matching.
         </p>
       </div>
 
       {/* Profile Completeness Banner */}
-      <div className="quantus-card p-6 border-l-4 border-l-violet-500 space-y-3">
+      <div className="quantus-card p-5 border-l-4 border-l-violet-500 space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Sparkles size={18} className="text-violet-500" />
-            <h3 className="text-sm font-extrabold text-haiti-900 dark:text-white">Profile Completeness</h3>
+            <Sparkles size={16} className="text-violet-500" />
+            <h3 className="text-sm font-bold text-haiti-900 dark:text-white">Profile Completeness</h3>
           </div>
-          <span className="text-sm font-black text-violet-600 dark:text-violet-400">{completionPercentage}% Complete</span>
+          <span className="text-xs font-bold text-violet-600 dark:text-violet-400">{completionPercentage}% Complete</span>
         </div>
 
-        <div className="w-full bg-chalk dark:bg-haiti-950 h-2.5 rounded-full overflow-hidden border border-violet-100 dark:border-haiti-800">
-          <div className="bg-violet-500 h-full rounded-full transition-all duration-500 shadow-violet-glow" style={{ width: `${completionPercentage}%` }} />
+        <div className="w-full bg-violet-100 dark:bg-haiti-950 h-2 rounded-full overflow-hidden border border-violet-100 dark:border-haiti-800">
+          <div className="bg-violet-600 h-full rounded-full transition-all duration-500" style={{ width: `${completionPercentage}%` }} />
         </div>
 
         <p className="text-xs text-slate-500 dark:text-haiti-300">
@@ -56,42 +56,42 @@ export default function ProfilePage() {
       <div className="grid gap-6 md:grid-cols-3">
         {/* Main Details Form */}
         <form onSubmit={handleProfileSave} className="md:col-span-2 quantus-card p-6 space-y-4 text-xs">
-          <h3 className="text-sm font-extrabold text-haiti-900 dark:text-white">Personal Information</h3>
+          <h3 className="text-sm font-bold text-haiti-900 dark:text-white">Personal Information</h3>
 
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <label className="block text-[11px] font-bold text-haiti-900 dark:text-white mb-1">Full Name</label>
+              <label className="block text-xs font-semibold text-haiti-900 dark:text-white mb-1">Full Name</label>
               <input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full rounded-xl border border-violet-200 bg-chalk p-2.5 font-semibold text-haiti-900 focus:border-violet-500 focus:outline-hidden dark:border-haiti-800 dark:bg-haiti-950 dark:text-white"
+                className="w-full rounded-lg border border-violet-100 bg-white p-2.5 text-xs text-haiti-900 focus:border-violet-500 focus:ring-1 focus:ring-violet-500 focus:outline-hidden dark:border-haiti-800 dark:bg-haiti-950 dark:text-white"
               />
             </div>
             <div>
-              <label className="block text-[11px] font-bold text-haiti-900 dark:text-white mb-1">Account Email</label>
+              <label className="block text-xs font-semibold text-haiti-900 dark:text-white mb-1">Account Email</label>
               <input
                 value={user?.email || ''}
                 disabled
-                className="w-full rounded-xl border border-violet-100 bg-slate-100 p-2.5 font-semibold text-slate-400 dark:border-haiti-800 dark:bg-haiti-950 dark:text-slate-500"
+                className="w-full rounded-lg border border-violet-100 bg-slate-50 p-2.5 text-xs text-slate-400 dark:border-haiti-800 dark:bg-haiti-950 dark:text-slate-500"
               />
             </div>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <label className="block text-[11px] font-bold text-haiti-900 dark:text-white mb-1">Professional Title</label>
+              <label className="block text-xs font-semibold text-haiti-900 dark:text-white mb-1">Professional Title</label>
               <input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full rounded-xl border border-violet-200 bg-chalk p-2.5 font-semibold text-haiti-900 focus:border-violet-500 focus:outline-hidden dark:border-haiti-800 dark:bg-haiti-950 dark:text-white"
+                className="w-full rounded-lg border border-violet-100 bg-white p-2.5 text-xs text-haiti-900 focus:border-violet-500 focus:ring-1 focus:ring-violet-500 focus:outline-hidden dark:border-haiti-800 dark:bg-haiti-950 dark:text-white"
               />
             </div>
             <div>
-              <label className="block text-[11px] font-bold text-haiti-900 dark:text-white mb-1">Preferred Location</label>
+              <label className="block text-xs font-semibold text-haiti-900 dark:text-white mb-1">Preferred Location</label>
               <input
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                className="w-full rounded-xl border border-violet-200 bg-chalk p-2.5 font-semibold text-haiti-900 focus:border-violet-500 focus:outline-hidden dark:border-haiti-800 dark:bg-haiti-950 dark:text-white"
+                className="w-full rounded-lg border border-violet-100 bg-white p-2.5 text-xs text-haiti-900 focus:border-violet-500 focus:ring-1 focus:ring-violet-500 focus:outline-hidden dark:border-haiti-800 dark:bg-haiti-950 dark:text-white"
               />
             </div>
           </div>
@@ -100,7 +100,7 @@ export default function ProfilePage() {
             <button
               type="submit"
               disabled={saving}
-              className="quantus-btn-primary px-5 py-2 text-xs"
+              className="quantus-btn-primary text-xs flex items-center gap-1.5"
             >
               {saving ? 'Saving...' : 'Save Profile Changes'}
             </button>
@@ -110,7 +110,7 @@ export default function ProfilePage() {
         {/* Subscription Sidebar Card */}
         <div className="quantus-card p-6 space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-extrabold text-haiti-900 dark:text-white flex items-center gap-1.5">
+            <h3 className="text-sm font-bold text-haiti-900 dark:text-white flex items-center gap-1.5">
               <Award size={16} className="text-violet-500" /> Plan & Status
             </h3>
             <span className="quantus-badge-turbo">PRO OS</span>
@@ -120,15 +120,15 @@ export default function ProfilePage() {
             You are currently on the <strong>Pro AI Job OS Plan</strong> with unlimited application tracking and full Gemini AI suite.
           </p>
 
-          <div className="rounded-xl border border-violet-200 bg-chalk p-3.5 dark:border-haiti-800 dark:bg-haiti-950 text-xs space-y-2">
-            <div className="flex items-center gap-2 font-bold text-haiti-900 dark:text-white">
-              <CheckCircle2 size={14} className="text-emerald-500" /> Unlimited Job Tracking
+          <div className="rounded-lg border border-violet-100 bg-violet-50/40 p-3.5 dark:border-haiti-800 dark:bg-haiti-950/60 text-xs space-y-2">
+            <div className="flex items-center gap-2 font-semibold text-haiti-900 dark:text-white">
+              <CheckCircle2 size={14} className="text-emerald-500 shrink-0" /> Unlimited Job Tracking
             </div>
-            <div className="flex items-center gap-2 font-bold text-haiti-900 dark:text-white">
-              <CheckCircle2 size={14} className="text-emerald-500" /> AI Resume Match & Prep
+            <div className="flex items-center gap-2 font-semibold text-haiti-900 dark:text-white">
+              <CheckCircle2 size={14} className="text-emerald-500 shrink-0" /> AI Resume Match & Prep
             </div>
-            <div className="flex items-center gap-2 font-bold text-haiti-900 dark:text-white">
-              <CheckCircle2 size={14} className="text-emerald-500" /> Priority Support
+            <div className="flex items-center gap-2 font-semibold text-haiti-900 dark:text-white">
+              <CheckCircle2 size={14} className="text-emerald-500 shrink-0" /> Priority Support
             </div>
           </div>
         </div>

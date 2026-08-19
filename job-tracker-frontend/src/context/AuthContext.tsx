@@ -18,17 +18,19 @@ interface AuthContextValue {
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
   refreshUser: () => Promise<void>;
+  updateUser: (updatedUser: User) => void;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
-// 🔥 ADD THIS FUNCTION
-const updateUser = (updatedUser: User) => {
-  setUser(updatedUser);
-};
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(storage.getToken());
   const [loading, setLoading] = useState<boolean>(true);
+
+  const updateUser = (updatedUser: User) => {
+    setUser(updatedUser);
+  };
 
   // 🔥 FIX: Proper session restore
   useEffect(() => {

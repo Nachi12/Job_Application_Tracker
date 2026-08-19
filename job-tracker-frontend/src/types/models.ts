@@ -114,11 +114,13 @@ export interface InterviewQuestion {
   keyTopics: string[];
 }
 
+export type SubscriptionPlan = 'FREE' | 'PRO';
+
 export interface User {
   id: string;
   name: string;
   email: string;
   role?: string;
-  subscriptionPlan: 'FREE' | 'PRO';
+  subscriptionPlan: SubscriptionPlan;
   createdAt?: string;
 }

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { aiService } from '../services/aiService';
 import { InterviewQuestion } from '../types/models';
 import { useToastContext } from '../context/ToastContext';
-import { BookOpen, Sparkles, HelpCircle, CheckCircle2, Award, Play } from 'lucide-react';
+import { BookOpen, Sparkles, HelpCircle, Award, Play } from 'lucide-react';
 
 export default function InterviewPrepPage() {
   const { pushToast } = useToastContext();
@@ -63,21 +63,21 @@ export default function InterviewPrepPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-6xl mx-auto pb-10">
-      <div>
-        <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2 tracking-tight">
-          <BookOpen className="text-indigo-600 dark:text-indigo-400" size={22} /> Interview Preparation & Mock Workspace
+    <div className="space-y-5 max-w-6xl mx-auto pb-10">
+      <div className="border-b border-violet-100 dark:border-haiti-800 pb-4">
+        <h1 className="text-xl font-bold text-haiti-900 dark:text-white flex items-center gap-2 tracking-tight">
+          <BookOpen className="text-violet-500" size={20} /> Interview Preparation & Mock Workspace
         </h1>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+        <p className="text-xs text-slate-500 dark:text-haiti-300 font-normal mt-0.5">
           Generate role-specific interview questions, review model guidance, and practice in Mock Interview Mode.
         </p>
       </div>
 
       {/* Generator Controls */}
-      <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 shadow-xs space-y-4">
+      <div className="quantus-card p-5 space-y-4">
         <div className="grid gap-4 md:grid-cols-2">
           <div>
-            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-haiti-900 dark:text-white uppercase tracking-wider mb-1">
               Target Role
             </label>
             <input
@@ -85,11 +85,11 @@ export default function InterviewPrepPage() {
               value={role}
               onChange={(e) => setRole(e.target.value)}
               placeholder="e.g. Senior Frontend Engineer, Full Stack Developer"
-              className="w-full rounded-lg border border-slate-200 bg-slate-50/50 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-hidden dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100"
+              className="w-full rounded-lg border border-violet-100 bg-white p-2.5 text-xs text-haiti-900 focus:border-violet-500 focus:ring-1 focus:ring-violet-500 focus:outline-hidden dark:border-haiti-800 dark:bg-haiti-950 dark:text-white"
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-haiti-900 dark:text-white uppercase tracking-wider mb-1">
               Optional Job Description
             </label>
             <input
@@ -97,7 +97,7 @@ export default function InterviewPrepPage() {
               value={jobDescription}
               onChange={(e) => setJobDescription(e.target.value)}
               placeholder="Paste job description snippet for context..."
-              className="w-full rounded-lg border border-slate-200 bg-slate-50/50 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-hidden dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100"
+              className="w-full rounded-lg border border-violet-100 bg-white p-2.5 text-xs text-haiti-900 focus:border-violet-500 focus:ring-1 focus:ring-violet-500 focus:outline-hidden dark:border-haiti-800 dark:bg-haiti-950 dark:text-white"
             />
           </div>
         </div>
@@ -106,7 +106,7 @@ export default function InterviewPrepPage() {
           <button
             onClick={handleGenerateQuestions}
             disabled={loading}
-            className="flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-indigo-700 disabled:opacity-50"
+            className="quantus-btn-primary text-xs flex items-center gap-2 disabled:opacity-50"
           >
             {loading ? (
               <>
@@ -138,14 +138,14 @@ export default function InterviewPrepPage() {
                   setUserAnswer('');
                   setEvalResult(null);
                 }}
-                className={`w-full text-left p-3 rounded-lg border text-xs transition ${
+                className={`w-full text-left p-3 rounded-xl border text-xs transition ${
                   activeQuestion?.id === q.id
-                    ? 'border-indigo-600 bg-indigo-50/60 dark:bg-indigo-950/40 text-indigo-900 dark:text-indigo-200 font-semibold'
-                    : 'border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-50'
+                    ? 'border-violet-500 bg-violet-50 dark:bg-haiti-900 text-haiti-900 dark:text-white font-bold'
+                    : 'quantus-card text-slate-700 dark:text-haiti-300 hover:border-violet-300'
                 }`}
               >
                 <div className="flex items-center justify-between gap-1 mb-1">
-                  <span className="text-[10px] uppercase font-bold text-indigo-600">{q.category}</span>
+                  <span className="quantus-badge-violet font-semibold uppercase">{q.category}</span>
                 </div>
                 <div className="line-clamp-2">{q.question}</div>
               </button>
@@ -155,41 +155,41 @@ export default function InterviewPrepPage() {
           {/* Active Question & Mock Practice */}
           <div className="md:col-span-2 space-y-5">
             {activeQuestion && (
-              <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 shadow-xs space-y-4">
+              <div className="quantus-card p-5 space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="rounded-md bg-indigo-50 px-2.5 py-1 text-[11px] font-bold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+                  <span className="quantus-badge-violet font-bold">
                     {activeQuestion.category} Question
                   </span>
                 </div>
 
-                <h2 className="text-base font-bold text-slate-900 dark:text-slate-100">
+                <h2 className="text-base font-bold text-haiti-900 dark:text-white">
                   {activeQuestion.question}
                 </h2>
 
-                <div className="rounded-lg border border-slate-200 bg-slate-50/60 p-3.5 dark:border-slate-800 dark:bg-slate-950/40 text-xs space-y-1">
-                  <div className="font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                    <HelpCircle size={14} className="text-indigo-600" /> Answer Guidance Strategy
+                <div className="rounded-lg border border-violet-100 bg-violet-50/40 p-3.5 dark:border-haiti-800 dark:bg-haiti-950/60 text-xs space-y-1">
+                  <div className="font-bold text-haiti-900 dark:text-white flex items-center gap-1.5">
+                    <HelpCircle size={14} className="text-violet-500" /> Answer Guidance Strategy
                   </div>
-                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{activeQuestion.guidance}</p>
+                  <p className="text-slate-600 dark:text-haiti-300 leading-relaxed">{activeQuestion.guidance}</p>
                 </div>
 
                 {/* Mock Practice Form */}
-                <div className="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-3">
-                  <h3 className="text-xs font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-                    <Play size={13} className="text-emerald-600" /> Practice Answer (Mock Interview Mode)
+                <div className="pt-3 border-t border-violet-100 dark:border-haiti-800 space-y-3">
+                  <h3 className="text-xs font-bold text-haiti-900 dark:text-white flex items-center gap-1.5">
+                    <Play size={13} className="text-emerald-500" /> Practice Answer (Mock Interview Mode)
                   </h3>
                   <textarea
                     rows={5}
                     value={userAnswer}
                     onChange={(e) => setUserAnswer(e.target.value)}
                     placeholder="Type your response to this interview question..."
-                    className="w-full rounded-lg border border-slate-200 bg-slate-50/50 p-3 text-xs text-slate-900 focus:border-indigo-500 focus:outline-hidden dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100"
+                    className="w-full rounded-lg border border-violet-100 bg-white p-3 text-xs text-haiti-900 focus:border-violet-500 focus:ring-1 focus:ring-violet-500 focus:outline-hidden dark:border-haiti-800 dark:bg-haiti-950 dark:text-white"
                   />
                   <div className="flex justify-end">
                     <button
                       onClick={handleEvaluateAnswer}
                       disabled={evaluating}
-                      className="flex items-center gap-2 rounded-lg bg-emerald-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs hover:bg-emerald-700 disabled:opacity-50"
+                      className="quantus-btn-primary text-xs flex items-center gap-2 disabled:opacity-50"
                     >
                       {evaluating ? 'Evaluating Answer...' : 'Evaluate Answer'}
                     </button>
@@ -198,25 +198,25 @@ export default function InterviewPrepPage() {
 
                 {/* Evaluation Feedback */}
                 {evalResult && (
-                  <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950 text-xs space-y-3 pt-4 border-t-2 border-t-emerald-500">
+                  <div className="rounded-lg border border-violet-100 bg-violet-50/50 p-4 dark:border-haiti-800 dark:bg-haiti-950 text-xs space-y-3 pt-4 border-t-2 border-t-violet-500">
                     <div className="flex items-center justify-between">
-                      <div className="font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-                        <Award size={16} className="text-amber-500" /> AI Mock Feedback
+                      <div className="font-bold text-haiti-900 dark:text-white flex items-center gap-1.5">
+                        <Award size={16} className="text-violet-500" /> AI Mock Feedback
                       </div>
-                      <div className="text-sm font-extrabold text-emerald-600">Score: {evalResult.overallScore}/100</div>
+                      <div className="text-sm font-extrabold text-violet-600 dark:text-violet-400">Score: {evalResult.overallScore}/100</div>
                     </div>
-                    <p className="text-slate-700 dark:text-slate-300 font-medium">{evalResult.summary}</p>
+                    <p className="text-slate-700 dark:text-haiti-200 font-medium">{evalResult.summary}</p>
                     <div className="grid gap-2 md:grid-cols-2 pt-2">
                       <div className="space-y-1">
-                        <div className="font-semibold text-emerald-600">Key Strengths</div>
+                        <div className="font-bold text-emerald-600 dark:text-emerald-400">Key Strengths</div>
                         {evalResult.strengths?.map((s: string, i: number) => (
-                          <div key={i} className="text-slate-600 dark:text-slate-400">• {s}</div>
+                          <div key={i} className="text-slate-600 dark:text-haiti-300">• {s}</div>
                         ))}
                       </div>
                       <div className="space-y-1">
-                        <div className="font-semibold text-amber-600">Areas to Improve</div>
+                        <div className="font-bold text-amber-600 dark:text-amber-400">Areas to Improve</div>
                         {evalResult.areasToImprove?.map((a: string, i: number) => (
-                          <div key={i} className="text-slate-600 dark:text-slate-400">• {a}</div>
+                          <div key={i} className="text-slate-600 dark:text-haiti-300">• {a}</div>
                         ))}
                       </div>
                     </div>

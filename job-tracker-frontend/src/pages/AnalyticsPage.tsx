@@ -28,26 +28,26 @@ export default function AnalyticsPage() {
   }));
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-10">
-      <div>
-        <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
+    <div className="space-y-5 max-w-7xl mx-auto pb-10">
+      <div className="border-b border-violet-100 dark:border-haiti-800 pb-4">
+        <h1 className="text-xl font-bold text-haiti-900 dark:text-white tracking-tight">
           Application Funnel & Analytics
         </h1>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+        <p className="text-xs text-slate-500 dark:text-haiti-300 font-normal mt-0.5">
           In-depth application conversion rates, response trends, and status distribution.
         </p>
       </div>
 
       {/* Application Funnel Card */}
       {funnel.length > 0 && (
-        <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 shadow-xs space-y-4">
-          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Application Conversion Funnel</h3>
+        <div className="quantus-card p-5 space-y-4">
+          <h3 className="text-sm font-bold text-haiti-900 dark:text-white">Application Conversion Funnel</h3>
           <div className="grid gap-3 md:grid-cols-5">
             {funnel.map((item, idx) => (
-              <div key={idx} className="rounded-lg border border-slate-200 bg-slate-50/50 p-3.5 dark:border-slate-800 dark:bg-slate-950 text-center space-y-1">
-                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{item.stage}</div>
-                <div className="text-xl font-extrabold text-indigo-600 dark:text-indigo-400">{item.count}</div>
-                <div className="text-[11px] font-medium text-slate-600 dark:text-slate-400">
+              <div key={idx} className="rounded-lg border border-violet-100 bg-violet-50/40 p-3.5 dark:border-haiti-800 dark:bg-haiti-950/60 text-center space-y-1">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-haiti-400">{item.stage}</div>
+                <div className="text-xl font-extrabold text-violet-600 dark:text-violet-400">{item.count}</div>
+                <div className="text-[11px] font-medium text-slate-600 dark:text-haiti-300">
                   {item.conversionRate}% conversion
                 </div>
               </div>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { JobApplication, JobStatus } from '../types/models';
-import { Calendar, MapPin, Building } from 'lucide-react';
+import { Calendar, Building } from 'lucide-react';
 
 interface Props {
   jobs: JobApplication[];
@@ -82,14 +82,14 @@ export default function KanbanBoard({ jobs = [], onStatusChange }: Props) {
                   <p className="text-[11px] text-slate-400 dark:text-haiti-300 font-normal">Empty</p>
                 </div>
               ) : (
-                columnJobs.map((job) => {
+                columnJobs.map((job, idx) => {
                   const jobId = job._id || job.id;
                   return (
                     <div
-                      key={jobId}
+                      key={jobId || idx}
                       draggable
-                      onDragStart={(e) => handleDragStart(e, jobId)}
-                      onClick={() => navigate(`/applications/${jobId}`)}
+                      onDragStart={(e) => jobId && handleDragStart(e, jobId)}
+                      onClick={() => jobId && navigate(`/applications/${jobId}`)}
                       className="group cursor-pointer quantus-card p-3 space-y-1.5 relative border-l-2 border-l-violet-500 hover:border-violet-400"
                     >
                       <div className="flex items-start justify-between gap-1">
@@ -115,7 +115,7 @@ export default function KanbanBoard({ jobs = [], onStatusChange }: Props) {
                           onClick={(e) => e.stopPropagation()}
                           onChange={(e) => {
                             e.stopPropagation();
-                            onStatusChange(jobId, e.target.value as JobStatus);
+                            if (jobId) onStatusChange(jobId, e.target.value as JobStatus);
                           }}
                           className="rounded-md border border-violet-200 bg-chalk px-1.5 py-0.5 text-[10px] font-semibold text-haiti-900 dark:border-haiti-700 dark:bg-haiti-800 dark:text-white"
                         >

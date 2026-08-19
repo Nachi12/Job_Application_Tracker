@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { reminderService } from '../services/reminderService';
 import { Reminder } from '../types/models';
 import { useToastContext } from '../context/ToastContext';
-import { Bell, Plus, CheckCircle, Clock, Calendar } from 'lucide-react';
+import { Bell, Plus, CheckCircle, Calendar } from 'lucide-react';
 
 export default function RemindersPage() {
   const { pushToast } = useToastContext();
@@ -12,7 +12,7 @@ export default function RemindersPage() {
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState('');
   const [dueDate, setDueDate] = useState('');
-  const [type, setType] = useState<'follow_up' | 'interview' | 'custom'>('follow_up');
+  const [type] = useState<'follow_up' | 'interview' | 'custom'>('follow_up');
 
   const loadReminders = async () => {
     setLoading(true);
@@ -59,19 +59,19 @@ export default function RemindersPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-6xl mx-auto pb-10">
-      <div className="flex items-center justify-between">
+    <div className="space-y-5 max-w-6xl mx-auto pb-10">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-violet-100 dark:border-haiti-800 pb-4">
         <div>
-          <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2 tracking-tight">
-            <Bell className="text-indigo-600 dark:text-indigo-400" size={22} /> Smart Reminders & Follow-ups
+          <h1 className="text-xl font-bold text-haiti-900 dark:text-white flex items-center gap-2 tracking-tight">
+            <Bell className="text-violet-500" size={20} /> Smart Reminders & Follow-ups
           </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 dark:text-haiti-300 font-normal mt-0.5">
             Stay on top of recruiter follow-ups, upcoming interviews, and application deadlines.
           </p>
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center gap-1.5 rounded-lg bg-indigo-600 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-indigo-700"
+          className="quantus-btn-primary text-xs flex items-center gap-1.5 self-start sm:self-auto"
         >
           <Plus size={14} /> Add Reminder
         </button>
@@ -79,19 +79,19 @@ export default function RemindersPage() {
 
       {loading ? (
         <div className="flex h-32 items-center justify-center">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-indigo-600 border-t-transparent" />
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-violet-600 border-t-transparent" />
         </div>
       ) : (
         <div className="space-y-3">
           {reminders.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-slate-300 p-8 text-center text-xs text-slate-400 dark:border-slate-800">
+            <div className="quantus-card border-dashed p-8 text-center text-xs text-slate-400 dark:text-haiti-400">
               No active reminders. Add follow-up reminders to ensure no job opportunity gets cold!
             </div>
           ) : (
             reminders.map((r) => (
               <div
                 key={r._id}
-                className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900 shadow-xs flex items-center justify-between gap-4"
+                className="quantus-card p-4 flex items-center justify-between gap-4"
               >
                 <div className="flex items-center gap-3">
                   <button
@@ -99,18 +99,18 @@ export default function RemindersPage() {
                     className={`flex h-5 w-5 items-center justify-center rounded-full border transition ${
                       r.status === 'completed'
                         ? 'border-emerald-500 bg-emerald-500 text-white'
-                        : 'border-slate-300 dark:border-slate-700'
+                        : 'border-violet-200 dark:border-haiti-700 hover:border-violet-400'
                     }`}
                   >
                     {r.status === 'completed' && <CheckCircle size={12} />}
                   </button>
                   <div>
-                    <h4 className={`text-xs font-semibold ${r.status === 'completed' ? 'line-through text-slate-400' : 'text-slate-900 dark:text-slate-100'}`}>
+                    <h4 className={`text-xs font-semibold ${r.status === 'completed' ? 'line-through text-slate-400 dark:text-haiti-400' : 'text-haiti-900 dark:text-white'}`}>
                       {r.title}
                     </h4>
-                    <div className="flex items-center gap-2 text-[10px] text-slate-500 mt-0.5">
+                    <div className="flex items-center gap-2 text-[10px] text-slate-500 dark:text-haiti-300 mt-0.5">
                       <span className="flex items-center gap-1"><Calendar size={11} /> {new Date(r.dueDate).toLocaleDateString()}</span>
-                      <span className="uppercase font-bold text-indigo-600">{r.type}</span>
+                      <span className="quantus-badge-violet font-semibold uppercase">{r.type}</span>
                     </div>
                   </div>
                 </div>
@@ -119,7 +119,7 @@ export default function RemindersPage() {
                   {r.status !== 'completed' && (
                     <button
                       onClick={() => handleStatusChange(r._id, 'completed')}
-                      className="rounded border border-slate-200 px-2.5 py-1 text-[11px] font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300"
+                      className="quantus-btn-secondary text-[11px] h-7 px-2.5"
                     >
                       Mark Complete
                     </button>
@@ -133,39 +133,39 @@ export default function RemindersPage() {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-4">
-          <form onSubmit={handleCreate} className="w-full max-w-md rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 shadow-lg space-y-4">
-            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Set Follow-up Reminder</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-haiti-950/40 backdrop-blur-xs p-4">
+          <form onSubmit={handleCreate} className="w-full max-w-md quantus-card p-6 animate-fade-scale space-y-4">
+            <h3 className="text-sm font-bold text-haiti-900 dark:text-white">Set Follow-up Reminder</h3>
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Title</label>
+              <label className="block text-xs font-semibold text-haiti-900 dark:text-white mb-1">Title</label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Send follow-up email to recruiter"
-                className="w-full rounded-lg border border-slate-200 bg-slate-50 p-2 text-xs text-slate-900 focus:outline-hidden dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100"
+                className="w-full rounded-lg border border-violet-100 bg-white p-2.5 text-xs text-haiti-900 focus:outline-hidden focus:ring-1 focus:ring-violet-500 focus:border-violet-500 dark:border-haiti-800 dark:bg-haiti-950 dark:text-white"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Due Date</label>
+              <label className="block text-xs font-semibold text-haiti-900 dark:text-white mb-1">Due Date</label>
               <input
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full rounded-lg border border-slate-200 bg-slate-50 p-2 text-xs text-slate-900 focus:outline-hidden dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100"
+                className="w-full rounded-lg border border-violet-100 bg-white p-2.5 text-xs text-haiti-900 focus:outline-hidden focus:ring-1 focus:ring-violet-500 focus:border-violet-500 dark:border-haiti-800 dark:bg-haiti-950 dark:text-white"
               />
             </div>
             <div className="flex justify-end gap-2 pt-2">
               <button
                 type="button"
                 onClick={() => setShowModal(false)}
-                className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300"
+                className="quantus-btn-secondary text-xs"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="rounded-lg bg-indigo-600 px-4 py-1.5 text-xs font-semibold text-white hover:bg-indigo-700"
+                className="quantus-btn-primary text-xs"
               >
                 Save Reminder
               </button>

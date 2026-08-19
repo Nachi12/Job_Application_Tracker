@@ -15,12 +15,12 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto pb-10">
-      <div className="border-b border-violet-100 dark:border-haiti-800 pb-5">
-        <h1 className="text-2xl font-extrabold text-haiti-900 dark:text-white tracking-tight flex items-center gap-2">
-          <Settings className="text-violet-500" size={24} /> Application & System Settings
+    <div className="space-y-5 max-w-5xl mx-auto pb-10">
+      <div className="border-b border-violet-100 dark:border-haiti-800 pb-4">
+        <h1 className="text-xl font-bold text-haiti-900 dark:text-white tracking-tight flex items-center gap-2">
+          <Settings className="text-violet-500" size={20} /> Application & System Settings
         </h1>
-        <p className="text-xs text-slate-500 dark:text-haiti-300 font-medium mt-1">
+        <p className="text-xs text-slate-500 dark:text-haiti-300 font-normal mt-0.5">
           Manage your account, AI preferences, notifications, and application settings.
         </p>
       </div>
@@ -43,10 +43,10 @@ export default function SettingsPage() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition ${
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs transition ${
                   isActive
-                    ? 'bg-violet-500 text-white shadow-violet-glow font-bold'
-                    : 'text-slate-600 dark:text-haiti-300 hover:bg-violet-50 dark:hover:bg-haiti-900'
+                    ? 'bg-violet-600 text-white font-bold'
+                    : 'text-slate-600 dark:text-haiti-300 hover:bg-violet-50 dark:hover:bg-haiti-900 font-medium'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -67,12 +67,12 @@ export default function SettingsPage() {
         <div className="md:col-span-3 quantus-card p-6 space-y-5">
           {activeTab === 'account' && (
             <div className="space-y-4 text-xs">
-              <h3 className="text-sm font-extrabold text-haiti-900 dark:text-white">Account Details</h3>
+              <h3 className="text-sm font-bold text-haiti-900 dark:text-white">Account Details</h3>
               <p className="text-slate-500 dark:text-haiti-300">Manage your basic profile preferences and data export.</p>
               <div className="space-y-3 pt-2">
                 <div>
                   <label className="block font-bold text-haiti-900 dark:text-white mb-1">Timezone</label>
-                  <select className="w-full rounded-xl border border-violet-200 bg-chalk p-2.5 font-semibold text-haiti-900 dark:border-haiti-800 dark:bg-haiti-950 dark:text-white">
+                  <select className="w-full rounded-lg border border-violet-100 bg-white p-2.5 text-xs text-haiti-900 focus:outline-hidden focus:ring-1 focus:ring-violet-500 dark:border-haiti-800 dark:bg-haiti-950 dark:text-white">
                     <option>UTC (Coordinated Universal Time)</option>
                     <option>PST (Pacific Standard Time)</option>
                     <option>EST (Eastern Standard Time)</option>
@@ -81,7 +81,7 @@ export default function SettingsPage() {
                 </div>
               </div>
               <div className="flex justify-end pt-3">
-                <button onClick={handleSaveSettings} className="quantus-btn-primary px-4 py-2">
+                <button onClick={handleSaveSettings} className="quantus-btn-primary text-xs">
                   Save Account Settings
                 </button>
               </div>
@@ -91,7 +91,7 @@ export default function SettingsPage() {
           {activeTab === 'ai' && (
             <div className="space-y-4 text-xs">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-extrabold text-haiti-900 dark:text-white flex items-center gap-2">
+                <h3 className="text-sm font-bold text-haiti-900 dark:text-white flex items-center gap-2">
                   <Sparkles size={16} className="text-violet-500" /> AI Assistant Preferences
                 </h3>
                 <span className="quantus-badge-turbo">GEMINI 2.5</span>
@@ -99,10 +99,10 @@ export default function SettingsPage() {
               <p className="text-slate-500 dark:text-haiti-300">Configure strict temperature and grounding behavior for LLM generations.</p>
 
               <div className="space-y-4 pt-2">
-                <div className="flex items-center justify-between p-3.5 rounded-xl border border-violet-100 bg-chalk dark:border-haiti-800 dark:bg-haiti-950">
+                <div className="flex items-center justify-between p-3.5 rounded-xl border border-violet-100 bg-violet-50/40 dark:border-haiti-800 dark:bg-haiti-950/60">
                   <div>
                     <div className="font-bold text-haiti-900 dark:text-white">Auto-generate Cover Letter Snippets</div>
-                    <div className="text-[11px] text-slate-500">Automatically draft cover letters when new applications are saved.</div>
+                    <div className="text-[11px] text-slate-500 dark:text-haiti-300">Automatically draft cover letters when new applications are saved.</div>
                   </div>
                   <input
                     type="checkbox"
@@ -117,7 +117,7 @@ export default function SettingsPage() {
                   <select
                     value={modelTemperature}
                     onChange={(e) => setModelTemperature(e.target.value)}
-                    className="w-full rounded-xl border border-violet-200 bg-chalk p-2.5 font-semibold text-haiti-900 dark:border-haiti-800 dark:bg-haiti-950 dark:text-white"
+                    className="w-full rounded-lg border border-violet-100 bg-white p-2.5 text-xs text-haiti-900 focus:outline-hidden focus:ring-1 focus:ring-violet-500 dark:border-haiti-800 dark:bg-haiti-950 dark:text-white"
                   >
                     <option value="0.1">0.1 - Extremely Strict / ATS Grounded</option>
                     <option value="0.2">0.2 - Standard Recommended (Balanced)</option>
@@ -127,7 +127,7 @@ export default function SettingsPage() {
               </div>
 
               <div className="flex justify-end pt-3">
-                <button onClick={handleSaveSettings} className="quantus-btn-primary px-4 py-2">
+                <button onClick={handleSaveSettings} className="quantus-btn-primary text-xs">
                   Save AI Preferences
                 </button>
               </div>
@@ -136,25 +136,25 @@ export default function SettingsPage() {
 
           {activeTab === 'appearance' && (
             <div className="space-y-4 text-xs">
-              <h3 className="text-sm font-extrabold text-haiti-900 dark:text-white">Appearance & Theme</h3>
-              <p className="text-slate-500 dark:text-haiti-300">HireLog uses Quantus Palette 2025 across light and dark modes.</p>
-              <div className="p-4 rounded-xl border border-violet-100 bg-chalk dark:border-haiti-800 dark:bg-haiti-950 space-y-2">
-                <div className="font-bold text-violet-600 dark:text-violet-400">Quantus Theme Applied</div>
-                <div className="text-[11px] text-slate-500">Electric Violet (#834DFB) & Turbo (#F0E100) are active.</div>
+              <h3 className="text-sm font-bold text-haiti-900 dark:text-white">Appearance & Theme</h3>
+              <p className="text-slate-500 dark:text-haiti-300">Quantus minimal design theme active across light and dark modes.</p>
+              <div className="p-4 rounded-xl border border-violet-100 bg-violet-50/40 dark:border-haiti-800 dark:bg-haiti-950/60 space-y-2">
+                <div className="font-bold text-violet-600 dark:text-violet-400">Quantus Palette Active</div>
+                <div className="text-[11px] text-slate-500 dark:text-haiti-300">Electric Violet (#834DFB) & Turbo (#F0E100) are configured.</div>
               </div>
             </div>
           )}
 
           {activeTab === 'danger' && (
             <div className="space-y-4 text-xs">
-              <h3 className="text-sm font-extrabold text-rose-600">Danger Zone</h3>
+              <h3 className="text-sm font-bold text-rose-600">Danger Zone</h3>
               <p className="text-slate-500 dark:text-haiti-300">Irreversible actions on your account and data.</p>
               <div className="p-4 rounded-xl border border-rose-200 bg-rose-50/50 dark:border-rose-950 dark:bg-rose-950/30 flex items-center justify-between">
                 <div>
                   <div className="font-bold text-rose-700 dark:text-rose-300">Purge Application History</div>
-                  <div className="text-[11px] text-rose-600/80">Permanently remove all job tracking records.</div>
+                  <div className="text-[11px] text-rose-600/80 dark:text-rose-400/80">Permanently remove all job tracking records.</div>
                 </div>
-                <button onClick={() => alert('Action blocked in demo workspace.')} className="px-3.5 py-1.5 rounded-xl bg-rose-600 font-bold text-white text-xs hover:bg-rose-700">
+                <button onClick={() => alert('Action blocked in demo workspace.')} className="px-3 py-1.5 rounded-lg bg-rose-600 font-bold text-white text-xs hover:bg-rose-700">
                   Delete All Data
                 </button>
               </div>
@@ -163,10 +163,10 @@ export default function SettingsPage() {
 
           {['notifications', 'security'].includes(activeTab) && (
             <div className="space-y-4 text-xs">
-              <h3 className="text-sm font-extrabold text-haiti-900 dark:text-white capitalize">{activeTab} Settings</h3>
+              <h3 className="text-sm font-bold text-haiti-900 dark:text-white capitalize">{activeTab} Settings</h3>
               <p className="text-slate-500 dark:text-haiti-300">Default security and notification rules are active.</p>
               <div className="flex justify-end pt-3">
-                <button onClick={handleSaveSettings} className="quantus-btn-primary px-4 py-2">
+                <button onClick={handleSaveSettings} className="quantus-btn-primary text-xs">
                   Save Changes
                 </button>
               </div>

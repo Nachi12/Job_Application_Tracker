@@ -25,7 +25,7 @@ export default function ApplicationsPage() {
 
   const handleDelete = async (job: JobApplication) => {
     const id = job._id || job.id;
-    if (confirm(`Delete application for ${job.companyName || (job as any).company}?`)) {
+    if (id && confirm(`Delete application for ${job.companyName || (job as any).company}?`)) {
       await remove(id);
     }
   };
@@ -33,7 +33,7 @@ export default function ApplicationsPage() {
   const handleSubmit = async (data: Partial<JobApplication>) => {
     if (editing) {
       const id = editing._id || editing.id;
-      await update(id, data);
+      if (id) await update(id, data);
     } else {
       await create(data);
     }

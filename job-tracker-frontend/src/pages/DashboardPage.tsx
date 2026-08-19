@@ -1,16 +1,14 @@
 import { useJobsContext } from '../context/JobsContext';
-import { useAuth } from '../hooks/useAuth';
 import StatsCards from '../components/StatsCards';
 import ApplicationsOverTimeChart from '../components/charts/ApplicationsOverTimeChart';
 import StatusDistributionChart from '../components/charts/StatusDistributionChart';
 import { SkeletonCard } from '../components/Skeleton';
 import { exportJobsToCsv } from '../utils/csvExport';
-import { Download, Plus, Sparkles, ChevronRight } from 'lucide-react';
+import { Download, Plus, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function DashboardPage() {
   const { jobs = [], loading } = useJobsContext();
-  const { user } = useAuth();
   const navigate = useNavigate();
 
   const total = jobs.length;

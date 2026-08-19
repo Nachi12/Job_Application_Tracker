@@ -1,5 +1,4 @@
 import { NavLink } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
 import {
   LayoutDashboard,
   Briefcase,
@@ -21,7 +20,6 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ collapsed = false, onToggleCollapse }: SidebarProps) {
-  const { user } = useAuth();
 
   const workspaceItems = [
     { to: '/', label: 'Dashboard', icon: LayoutDashboard },
