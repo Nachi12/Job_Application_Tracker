@@ -1,151 +1,149 @@
-# HireLog — AI-Assisted Job Search Operating System
+# ⚡ HireLog — AI-Powered Job Application OS
 
-HireLog is an industry-ready, production-grade **AI-Assisted Job Search Operating System** built with the **MERN Stack** (MongoDB, Express.js, React, Node.js), TypeScript, Tailwind CSS, and Google Gemini API integration.
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.2-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Node.js](https://img.shields.io/badge/Node.js-20-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-4.19-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Cluster-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Google Gemini](https://img.shields.io/badge/AI-Google_Gemini-8E44AD?style=for-the-badge&logo=googlegemini&logoColor=white)](https://deepmind.google/technologies/gemini/)
 
-It transforms traditional job tracking into an intelligent, data-driven career application platform that answers three critical questions for applicants:
-1. **Should I apply?** (Job description parsing, candidate match scoring, and skill gap identification)
-2. **How should I apply?** (Grounded resume tailoring suggestions, tailored cover letters, and recruiter outreach messages)
-3. **How can I improve my chances?** (Contextual interview preparation, mock interview practice mode with scoring, and conversion funnel analytics)
-
----
-
-## 🌟 Key Features
-
-### 1. Job Search Dashboard & Real Analytics
-- Real-time pipeline metrics (Applications, Interviews, Offers, Rejections, Response Rates).
-- Application funnel conversion tracking (`Saved` → `Applied` → `Screening` → `Interview` → `Offer`).
-- Production-safe **CSV Export** with escaping and privacy safeguards.
-
-### 2. 5-Stage Kanban Application Pipeline
-- Interactive stages: **Saved**, **Applied**, **Screening**, **Interview**, **Offer**, **Closed/Rejected**.
-- Optimistic drag-and-drop state updates with automatic network rollback on failure.
-- Alternative keyboard-accessible pipeline status dropdown per card.
-
-### 3. Application Detail Workspace
-- Dedicated workspace per job application.
-- Complete **Activity History Timeline** tracking events (Created, Resume Submitted, Recruiter Contacted, Interview Scheduled).
-- Embedded AI tools for single-click resume tailoring, cover letter generation, and recruiter outreach scripts.
-
-### 4. AI Job Intelligence Suite
-- **Job Description Analyzer**: Structured extraction of required skills, preferred skills, experience, and responsibilities.
-- **Match Score Evaluator**: Calculates ATS match alignment without hallucinated numbers.
-- **Skill Gap Analysis**: Separates required vs. preferred skill gaps with actionable learning recommendations.
-
-### 5. Contextual AI Application Assistant
-- **Grounded Resume Tailoring**: Phrasing improvements based strictly on user-provided experience (no fabricated metrics or false achievements).
-- **Tailored Cover Letters**: Role-specific 3-paragraph letters highlighting concrete technical alignment.
-- **Recruiter Outreach Scripts**: Ready-to-edit LinkedIn notes, recruiter emails, and referral requests.
-
-### 6. Interview Preparation & AI Mock Interview Mode
-- Role-specific questions across **Technical**, **Behavioral**, and **System Design** categories.
-- **AI Mock Interview Mode**: Evaluate practice answers on clarity, technical depth, structure, and correctness with instant score feedback (0–100).
-
-### 7. Resume & Smart Reminder Workspaces
-- Resume versioning and primary resume selection.
-- Smart follow-up reminders with status management (`pending`, `completed`, `snoozed`).
+HireLog is a full-stack, AI-native job application tracking operating system built with a minimal, high-contrast design language. Designed for modern software engineers and job seekers, HireLog streamlines your entire job hunt — from application tracking and interview preparation to AI-driven resume ATS optimization.
 
 ---
 
-## 🛠️ Technology Stack & Architecture
+## ✨ Features
 
-- **Frontend**: React 18, TypeScript, Tailwind CSS, Lucide React, Recharts, React Router v6
-- **Backend**: Node.js, Express.js (ES Modules), Mongoose, JWT Authentication, Helmet, CORS, Rate Limiting
-- **Database**: MongoDB Atlas with compound database indexing
-- **AI Integration**: Google Gemini API REST client with structured JSON response schemas, token caps, and prompt injection shielding
-- **Testing**: Jest with ESM support (`--experimental-vm-modules`)
-- **CI/CD**: GitHub Actions workflow
+- 🎯 **Kanban & List Application Boards**: Track application statuses seamlessly across *Saved*, *Applied*, *Interviewing*, *Offered*, and *Rejected* columns.
+- ⚡ **Command Palette (`Cmd + K` / `Ctrl + K`)**: Global fast-action search to navigate pages, create new applications, or jump directly to job details instantly.
+- 🤖 **AI Job Intelligence & ATS Matcher**: Analyze job descriptions against your resume, extract key missing keywords, evaluate match scores, and generate customized cover letter snippets powered by **Google Gemini**.
+- 📝 **Resume Vault & Versioning**: Upload, store, and tailor multiple resume versions tailored to specific job domains.
+- 💡 **AI Interview Prep Suite**: Automated generation of technical & behavioral interview questions tailored to specific job titles and tech stacks.
+- ⏰ **Smart Reminders & Task Tracker**: Never miss an upcoming interview or follow-up deadline with structured priority reminders.
+- 📊 **Analytics & Insights Pipeline**: Real-time metrics on response rates, interview conversion percentages, and application velocity.
+- 📱 **Fully Responsive Layout**: Dedicated mobile navigation drawer, bottom action bar, and desktop sidebar navigation.
 
 ---
 
-## 📐 System Architecture Diagram
+## 🛠️ Tech Stack
 
-```mermaid
-flowchart TD
-    User["React 18 / TS Frontend"] -->|REST APIs + Bearer Token| Express["Express.js Server"]
-    Express --> AuthMiddleware["Auth Middleware (JWT sub extraction)"]
-    AuthMiddleware --> Controllers["Controllers & Services"]
-    
-    Controllers -->|Read / Write| MongoDB[(MongoDB Atlas)]
-    Controllers -->|Structured Prompt + Sanitization| AIService["aiService (Gemini API / Rule Engine)"]
-    
-    AIService -->|Validate JSON Schema| Controllers
-    Controllers -->|Clean JSON Response| User
+### Frontend
+- **Framework**: React 18 with TypeScript & Vite
+- **Styling**: Tailwind CSS (Quantus Dark/Light Theme System)
+- **Icons & UI**: Lucide React, Framer Motion
+- **Charts**: Recharts
+- **State & Context**: Custom React Context API (`JobsContext`, `AuthContext`, `ThemeContext`)
+
+### Backend
+- **Runtime**: Node.js (ES Modules)
+- **Framework**: Express.js
+- **Database**: MongoDB with Mongoose ORM
+- **Authentication**: JWT (JSON Web Tokens) & Bcrypt password hashing
+- **Security & Middleware**: Helmet, CORS, Express Rate Limit, Express Mongo Sanitize
+- **Testing**: Jest & Supertest
+
+---
+
+## 📁 Project Structure
+
+```
+Job_Application_Tracker/
+├── job-tracker-frontend/       # React + Vite + TypeScript Frontend
+│   ├── src/
+│   │   ├── components/        # KanbanBoard, CommandPalette, Navigation, Modals
+│   │   ├── context/           # AuthContext, JobsContext, ThemeContext
+│   │   ├── pages/             # ApplicationsPage, AnalyticsPage, InterviewPrepPage...
+│   │   ├── services/          # API services & Axios client
+│   │   ├── types/             # TypeScript models & interfaces
+│   │   └── utils/             # Helpers, constants, and theme utilities
+│   └── package.json
+└── job-tracker-backend/        # Express + Node.js REST API
+    ├── src/
+    │   ├── config/            # Database and Environment configurations
+    │   ├── controllers/       # Application, Resume, Interview & Auth logic
+    │   ├── middleware/        # JWT auth, error handlers, rate limiters
+    │   ├── models/            # Mongoose schemas (User, Job, Resume, Reminder)
+    │   ├── routes/            # Express REST endpoints
+    │   ├── services/          # AI Service (Google Gemini integration)
+    │   └── tests/             # Jest integration tests
+    └── package.json
 ```
 
 ---
 
-## 🔐 Security & Multi-User Isolation
-
-- **Mandatory User Isolation**: All query filters enforce `userId: req.user.sub` to prevent IDOR (Insecure Direct Object Reference) vulnerabilities.
-- **Prompt Injection Defense**: All user-supplied job descriptions and text are sanitized before LLM transmission.
-- **Backend AI Secret Management**: API keys remain 100% server-side; endpoints are guarded by strict rate limiting (`aiLimiter`).
-
----
-
-## 🚀 Getting Started locally
+## 🚀 Quick Start & Installation
 
 ### Prerequisites
-- Node.js (v18+)
-- MongoDB connection string (local or MongoDB Atlas)
+- **Node.js**: v18.x or higher
+- **npm**: v9.x or higher
+- **MongoDB**: Local MongoDB instance or MongoDB Atlas Connection String
 
-### 1. Clone & Install Dependencies
+---
 
+### 1. Clone the Repository
 ```bash
-# Backend
-cd job-tracker-backend
-npm install
+git clone https://github.com/your-username/Job_Application_Tracker.git
+cd Job_Application_Tracker
+```
 
-# Frontend
-cd ../job-tracker-frontend
+---
+
+### 2. Backend Setup
+```bash
+cd job-tracker-backend
 npm install
 ```
 
-### 2. Environment Configuration
-
-Create `.env` inside `job-tracker-backend/`:
-
+Create a `.env` file inside `job-tracker-backend/`:
 ```env
 NODE_ENV=development
 PORT=5001
-MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/hirelog?retryWrites=true&w=majority
+JWT_SECRET=your_super_secret_jwt_key
 JWT_EXPIRES_IN=7d
 FRONTEND_URL=http://localhost:5173
-GEMINI_API_KEY=your_optional_gemini_api_key
+LOG_LEVEL=dev
+GEMINI_API_KEY=your_google_gemini_api_key_optional
 ```
 
-Create `.env` inside `job-tracker-frontend/`:
-
-```env
-VITE_APP_NAME=HireLog
-VITE_API_BASE_URL=http://localhost:5001/api
-```
-
-### 3. Run Development Servers
-
+Start the backend dev server:
 ```bash
-# Start Backend (Terminal 1)
-cd job-tracker-backend
-npm run dev
-
-# Start Frontend (Terminal 2)
-cd job-tracker-frontend
 npm run dev
 ```
+> Server runs at `http://localhost:5001`
 
 ---
 
-## 🧪 Testing & Verification
+### 3. Frontend Setup
+Open a new terminal tab and navigate to the frontend directory:
+```bash
+cd job-tracker-frontend
+npm install
+```
 
-Run automated backend unit & security tests:
+Create a `.env` file inside `job-tracker-frontend/` (optional for local API URL override):
+```env
+VITE_API_BASE_URL=http://localhost:5001/api
+```
 
+Start the frontend dev server:
+```bash
+npm run dev
+```
+> Application will be live at `http://localhost:5173`
+
+---
+
+## 🧪 Running Tests
+
+### Backend Unit & Integration Tests
 ```bash
 cd job-tracker-backend
 npm test
 ```
 
-Run frontend production build verification:
-
+### Frontend Production Build Test
 ```bash
 cd job-tracker-frontend
 npm run build
@@ -153,6 +151,21 @@ npm run build
 
 ---
 
+## 🛡️ Security Features
+
+- **JWT Authentication**: Secure stateless token validation.
+- **Input Sanitization**: Protects against NoSQL injection attacks via `express-mongo-sanitize`.
+- **Rate Limiting**: Defends against brute-force and DDoS attempts using `express-rate-limit`.
+- **HTTP Headers**: Enforces security best practices via `helmet`.
+
+---
+
 ## 📄 License
 
-MIT License. Designed and built as an industry-ready portfolio product.
+Distributed under the MIT License. See `LICENSE` for details.
+
+---
+
+<p align="center">
+  Made with ❤️ for software engineers navigating the job market.
+</p>
