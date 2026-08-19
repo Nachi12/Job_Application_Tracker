@@ -11,8 +11,8 @@ const start = async () => {
 
     const app = createApp();
 
-    app.listen(env.port, () => {
-      console.log(`Server running at http://localhost:${env.port} in ${env.nodeEnv} mode`);
+    app.listen(env.port, '0.0.0.0', () => {
+      console.log(`Server running at http://0.0.0.0:${env.port} in ${env.nodeEnv} mode`);
     });
   } catch (error) {
     console.error('Server startup error:', error.message);
