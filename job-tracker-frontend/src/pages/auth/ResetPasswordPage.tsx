@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useToast } from '../../hooks/useToast';
 import { authService } from '../../services/authService';
 import DarkModeToggle from '../../components/DarkModeToggle';
-import { Lock, Eye, EyeOff, ArrowRight, Briefcase, ArrowLeft, Check, X, AlertCircle } from 'lucide-react';
+import { Lock, Eye, EyeOff, ArrowRight, ArrowLeft, Check, X, AlertCircle, ShieldCheck } from 'lucide-react';
 
 export default function ResetPasswordPage() {
   const { token } = useParams<{ token: string }>();
@@ -37,7 +37,7 @@ export default function ResetPasswordPage() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!token) {
-      setErrorMessage('Reset token is missing or invalid.');
+      setErrorMessage('Reset token is missing or has expired.');
       return;
     }
 
@@ -60,7 +60,7 @@ export default function ResetPasswordPage() {
       navigate('/login');
     } catch (err: any) {
       const msg =
-        err?.response?.data?.error || 'Failed to reset password. The link may have expired.';
+        err?.response?.data?.error || 'Failed to reset password. The security token may have expired.';
       setErrorMessage(msg);
       pushToast('error', msg);
     } finally {
@@ -69,51 +69,44 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center bg-[#F8F7FF] dark:bg-[#0B0617] px-4 py-10 transition-colors duration-200">
-      {/* Decorative ambient background glows */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 h-[32rem] w-[46rem] rounded-full bg-gradient-to-tr from-violet-600/20 via-purple-500/15 to-transparent blur-3xl dark:from-violet-600/15 dark:via-purple-900/15" />
-      </div>
-
-      {/* Top Bar with Theme Toggle */}
-      <header className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20">
-        <DarkModeToggle />
-      </header>
-
-      <main className="w-full max-w-[420px]">
-        {/* Brand Header */}
-        <div className="mb-6 flex flex-col items-center text-center">
-          <div className="relative mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-tr from-violet-700 via-violet-600 to-violet-500 text-white shadow-xl shadow-violet-500/25 ring-4 ring-violet-500/10 dark:ring-violet-400/10">
-            <Briefcase className="h-7 w-7" />
+    <div className="relative min-h-screen bg-[#FAF7F2] text-[#11253A] dark:bg-[#0B1623] dark:text-[#FAF7F2] transition-colors duration-200 flex flex-col justify-between selection:bg-[#D4AF83]/30 selection:text-[#183451]">
+      {/* Header */}
+      <header className="w-full max-w-7xl mx-auto px-6 py-5 flex items-center justify-between relative z-20">
+        <Link to="/" className="flex items-center gap-2.5 group">
+          <div className="h-9 w-9 rounded-xl bg-[#183451] dark:bg-[#FAF7F2] flex items-center justify-center text-[#FAF7F2] dark:text-[#183451] shadow-sm transition-transform group-hover:scale-105">
+            <span className="font-serif font-bold text-base tracking-tighter">H</span>
+            <span className="h-1.5 w-1.5 rounded-full bg-[#A9501C] -ml-0.5 mt-2" />
           </div>
-
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+          <div className="flex flex-col">
+            <span className="font-serif font-bold text-lg tracking-tight text-[#183451] dark:text-[#FAF7F2] leading-none">
               HireLog
-            </h1>
-            <span className="rounded-full bg-violet-100 dark:bg-violet-900/40 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-violet-700 dark:text-violet-300 border border-violet-200/60 dark:border-violet-800/40">
+            </span>
+            <span className="text-[10px] uppercase font-semibold tracking-widest text-[#A9501C] mt-0.5">
               Security
             </span>
           </div>
-        </div>
+        </Link>
+        <DarkModeToggle />
+      </header>
 
-        {/* Card */}
-        <section className="relative rounded-3xl border border-violet-100/90 bg-white/95 p-7 sm:p-8 shadow-2xl shadow-violet-900/5 backdrop-blur-xl transition-all dark:border-violet-900/30 dark:bg-[#150D27]/95 dark:shadow-2xl dark:shadow-black/60">
-          <div className="mb-5">
-            <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-              Set new password
-            </h2>
-            <p className="mt-1 text-xs text-slate-500 dark:text-violet-200/60">
-              Please enter your new password below.
+      {/* Main Container */}
+      <main className="flex-1 flex items-center justify-center px-4 py-12 relative z-10">
+        <div className="w-full max-w-md rounded-3xl border border-[#D4AF83]/40 dark:border-white/10 bg-white/95 dark:bg-[#0F1E2E]/95 p-8 sm:p-10 shadow-xl shadow-[#183451]/5 dark:shadow-black/40 backdrop-blur-sm">
+          <div className="mb-6">
+            <h1 className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-[#183451] dark:text-white">
+              Set New Password
+            </h1>
+            <p className="mt-1.5 text-xs text-[#183451]/65 dark:text-[#FAF7F2]/65">
+              Establish a secure new password for your candidate account.
             </p>
           </div>
 
           {errorMessage && (
             <div
               role="alert"
-              className="mb-4 flex items-start gap-2.5 rounded-xl border border-rose-200 bg-rose-50/90 p-3 text-xs text-rose-800 dark:border-rose-900/50 dark:bg-rose-950/40 dark:text-rose-200"
+              className="mb-5 flex items-start gap-2.5 rounded-xl border border-[#A9501C]/30 bg-[#FAECE4] dark:bg-[#361508]/60 p-3.5 text-xs text-[#602B13] dark:text-[#F4D6C6]"
             >
-              <AlertCircle className="h-4 w-4 shrink-0 text-rose-600 dark:text-rose-400 mt-0.5" />
+              <AlertCircle className="h-4 w-4 shrink-0 text-[#A9501C] mt-0.5" />
               <div className="flex-1 font-medium">{errorMessage}</div>
             </div>
           )}
@@ -122,12 +115,12 @@ export default function ResetPasswordPage() {
             <div className="space-y-1.5">
               <label
                 htmlFor="password"
-                className="block text-xs font-semibold text-slate-700 dark:text-violet-200"
+                className="block text-xs font-semibold uppercase tracking-wider text-[#183451] dark:text-[#FAF7F2]/90"
               >
                 New Password
               </label>
               <div className="relative">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 dark:text-violet-300/60">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#183451]/40 dark:text-[#FAF7F2]/40">
                   <Lock className="h-4 w-4" />
                 </div>
                 <input
@@ -137,13 +130,13 @@ export default function ResetPasswordPage() {
                   name="password"
                   value={form.password}
                   onChange={handleChange}
-                  placeholder="••••••••"
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50/70 py-2.5 pl-10 pr-10 text-sm text-slate-900 placeholder:text-slate-400 transition-all duration-150 focus:border-violet-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 dark:border-violet-900/40 dark:bg-[#0B0617]/70 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-violet-400 dark:focus:bg-[#0B0617]"
+                  placeholder="••••••••••••"
+                  className="w-full rounded-xl border border-[#D4AF83]/45 bg-white py-2.5 pl-10 pr-10 text-sm text-[#183451] placeholder:text-stone-400 transition-all duration-150 focus:border-[#A9501C] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#A9501C]/20 dark:border-white/15 dark:bg-[#0B1623] dark:text-white dark:placeholder:text-stone-500 dark:focus:border-[#D4AF83]"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600 dark:text-violet-300/60 dark:hover:text-violet-200"
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-stone-400 hover:text-[#183451] dark:hover:text-[#FAF7F2] transition-colors"
                   tabIndex={-1}
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -151,20 +144,20 @@ export default function ResetPasswordPage() {
               </div>
 
               {form.password.length > 0 && (
-                <div className="mt-2 grid grid-cols-2 gap-1.5 rounded-xl border border-slate-100 bg-slate-50/80 p-2.5 text-[11px] dark:border-violet-900/30 dark:bg-[#0B0617]/50">
-                  <div className={`flex items-center gap-1.5 ${rules.minLength ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-slate-400'}`}>
+                <div className="mt-2 grid grid-cols-2 gap-1.5 rounded-xl border border-[#D4AF83]/30 bg-white/70 dark:bg-[#0B1623]/70 p-2.5 text-[11px]">
+                  <div className={`flex items-center gap-1.5 ${rules.minLength ? 'text-emerald-700 dark:text-emerald-400 font-medium' : 'text-stone-400'}`}>
                     {rules.minLength ? <Check className="h-3 w-3" /> : <X className="h-3 w-3" />}
                     <span>8+ characters</span>
                   </div>
-                  <div className={`flex items-center gap-1.5 ${rules.hasUpper ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-slate-400'}`}>
+                  <div className={`flex items-center gap-1.5 ${rules.hasUpper ? 'text-emerald-700 dark:text-emerald-400 font-medium' : 'text-stone-400'}`}>
                     {rules.hasUpper ? <Check className="h-3 w-3" /> : <X className="h-3 w-3" />}
                     <span>1 uppercase letter</span>
                   </div>
-                  <div className={`flex items-center gap-1.5 ${rules.hasLower ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-slate-400'}`}>
+                  <div className={`flex items-center gap-1.5 ${rules.hasLower ? 'text-emerald-700 dark:text-emerald-400 font-medium' : 'text-stone-400'}`}>
                     {rules.hasLower ? <Check className="h-3 w-3" /> : <X className="h-3 w-3" />}
                     <span>1 lowercase letter</span>
                   </div>
-                  <div className={`flex items-center gap-1.5 ${rules.hasNumber ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-slate-400'}`}>
+                  <div className={`flex items-center gap-1.5 ${rules.hasNumber ? 'text-emerald-700 dark:text-emerald-400 font-medium' : 'text-stone-400'}`}>
                     {rules.hasNumber ? <Check className="h-3 w-3" /> : <X className="h-3 w-3" />}
                     <span>1 number</span>
                   </div>
@@ -175,12 +168,12 @@ export default function ResetPasswordPage() {
             <div className="space-y-1.5">
               <label
                 htmlFor="confirmPassword"
-                className="block text-xs font-semibold text-slate-700 dark:text-violet-200"
+                className="block text-xs font-semibold uppercase tracking-wider text-[#183451] dark:text-[#FAF7F2]/90"
               >
                 Confirm New Password
               </label>
               <div className="relative">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 dark:text-violet-300/60">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#183451]/40 dark:text-[#FAF7F2]/40">
                   <Lock className="h-4 w-4" />
                 </div>
                 <input
@@ -190,13 +183,13 @@ export default function ResetPasswordPage() {
                   name="confirmPassword"
                   value={form.confirmPassword}
                   onChange={handleChange}
-                  placeholder="••••••••"
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50/70 py-2.5 pl-10 pr-10 text-sm text-slate-900 placeholder:text-slate-400 transition-all duration-150 focus:border-violet-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 dark:border-violet-900/40 dark:bg-[#0B0617]/70 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-violet-400 dark:focus:bg-[#0B0617]"
+                  placeholder="••••••••••••"
+                  className="w-full rounded-xl border border-[#D4AF83]/45 bg-white py-2.5 pl-10 pr-10 text-sm text-[#183451] placeholder:text-stone-400 transition-all duration-150 focus:border-[#A9501C] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#A9501C]/20 dark:border-white/15 dark:bg-[#0B1623] dark:text-white dark:placeholder:text-stone-500 dark:focus:border-[#D4AF83]"
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600 dark:text-violet-300/60 dark:hover:text-violet-200"
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-stone-400 hover:text-[#183451] dark:hover:text-[#FAF7F2] transition-colors"
                   tabIndex={-1}
                 >
                   {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -207,12 +200,12 @@ export default function ResetPasswordPage() {
             <button
               type="submit"
               disabled={loading}
-              className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl bg-violet-600 py-2.5 px-4 text-sm font-semibold text-white shadow-lg shadow-violet-600/30 transition-all duration-150 hover:bg-violet-500 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[#A9501C] hover:bg-[#8E3F14] text-[#FAF7F2] py-2.5 px-4 text-sm font-semibold shadow-sm transition-all duration-150 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading ? (
                 <>
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                  <span>Updating password...</span>
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#FAF7F2] border-t-transparent" />
+                  <span>Updating security credentials...</span>
                 </>
               ) : (
                 <>
@@ -225,15 +218,24 @@ export default function ResetPasswordPage() {
             <div className="pt-2 text-center">
               <Link
                 to="/login"
-                className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-violet-600 dark:text-violet-300/70 dark:hover:text-violet-200 transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#183451]/70 hover:text-[#A9501C] dark:text-[#FAF7F2]/70 dark:hover:text-[#D4AF83] transition-colors"
               >
                 <ArrowLeft className="h-3.5 w-3.5" />
                 <span>Back to login</span>
               </Link>
             </div>
           </form>
-        </section>
+        </div>
       </main>
+
+      {/* Footer */}
+      <footer className="w-full max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#183451]/50 dark:text-[#FAF7F2]/50 gap-2 relative z-10">
+        <div>© {new Date().getFullYear()} HireLog Inc.</div>
+        <div className="flex items-center gap-1">
+          <ShieldCheck className="h-3.5 w-3.5 text-[#A9501C]" />
+          <span>Encrypted Account Security</span>
+        </div>
+      </footer>
     </div>
   );
 }

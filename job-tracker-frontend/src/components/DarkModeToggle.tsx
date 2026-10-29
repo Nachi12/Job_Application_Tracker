@@ -34,11 +34,15 @@ export default function DarkModeToggle() {
     <button
       onClick={toggleTheme}
       type="button"
-      className="inline-flex items-center justify-center h-9 w-9 rounded-xl border border-violet-200/80 bg-white/80 text-slate-600 shadow-sm backdrop-blur-md transition-all hover:border-violet-400 hover:bg-white hover:text-violet-600 dark:border-violet-900/50 dark:bg-[#18102B]/80 dark:text-violet-200 dark:hover:border-violet-700 dark:hover:text-white"
-      title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+      className="inline-flex items-center justify-center h-9 w-9 rounded-xl border border-sand-300/80 bg-white/90 text-riviera-800 shadow-sm backdrop-blur-md transition-all hover:border-sand-400 hover:bg-ivory-100 dark:border-riviera-700/80 dark:bg-riviera-900/90 dark:text-sand-300 dark:hover:border-sand-400/40 dark:hover:bg-riviera-800"
+      title={theme === 'dark' ? 'Switch to daylight theme' : 'Switch to evening theme'}
       aria-label="Toggle color theme"
     >
-      {theme === 'dark' ? <Sun className="h-4 w-4 text-amber-400 transition-transform duration-200 hover:rotate-45" /> : <Moon className="h-4 w-4 text-violet-600 transition-transform duration-200 hover:-rotate-12" />}
+      {theme === 'dark' ? (
+        <Sun className="h-4 w-4 text-terracotta-400 transition-transform duration-200 hover:rotate-45" />
+      ) : (
+        <Moon className="h-4 w-4 text-riviera-800 transition-transform duration-200 hover:-rotate-12" />
+      )}
     </button>
   );
 }
