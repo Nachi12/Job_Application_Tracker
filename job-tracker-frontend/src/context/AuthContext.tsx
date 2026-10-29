@@ -32,49 +32,82 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(updatedUser);
   };
 
-  // 🔥 FIX: Proper session restore
+  // Proper session restore
   useEffect(() => {
-    const existingToken = storage.getToken();
+    const initAuth = async () => {
+      const existingToken = storage.getToken();
+      const storedUserStr = localStorage.getItem('user');
 
-    if (existingToken) {
-      setToken(existingToken);
-      setUser({} as User); // temporary until you build /me
-    }
+      if (existingToken) {
+        setToken(existingToken);
+        if (storedUserStr) {
+          try {
+            setUser(JSON.parse(storedUserStr));
+          } catch (e) {
+            console.error('Error parsing stored user:', e);
+          }
+        }
+        try {
+          const me = await authService.me();
+          setUser(me);
+          localStorage.setItem('user', JSON.stringify(me));
+        } catch (err: any) {
+          console.error('Session restoration failed:', err);
+          // Only wipe session if token is truly invalid or expired (401 / 403)
+          if (err?.response?.status === 401 || err?.response?.status === 403) {
+            storage.clearToken();
+            localStorage.removeItem('user');
+            setToken(null);
+            setUser(null);
+          }
+        }
+      }
+      setLoading(false);
+    };
 
-    setLoading(false);
+    initAuth();
   }, []);
 
-  // 🔥 Central auth success handler
+  // Central auth success handler
   const handleAuthSuccess = (data: AuthResponse) => {
-  storage.setToken(data.token);
-  localStorage.setItem('user', JSON.stringify(data.user)); // ✅ ADD
-  setToken(data.token);
-  setUser(data.user);
-};
+    storage.setToken(data.token);
+    localStorage.setItem('user', JSON.stringify(data.user));
+    setToken(data.token);
+    setUser(data.user);
+  };
 
-  // 🔥 FIXED LOGIN
   const login = async (email: string, password: string) => {
-    const res = await authService.login({ email, password });
-
+    const res = await authService.login({
+      email: email.trim().toLowerCase(),
+      password
+    });
     handleAuthSuccess(res);
-
-    // 🔥 IMPORTANT: force React sync (fix redirect issue)
-    await new Promise((resolve) => setTimeout(resolve, 50));
   };
 
   const register = async (name: string, email: string, password: string) => {
-    const res = await authService.register({ name, email, password });
+    const res = await authService.register({
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      password
+    });
     handleAuthSuccess(res);
   };
 
   const logout = () => {
     storage.clearToken();
+    localStorage.removeItem('user');
     setToken(null);
     setUser(null);
   };
 
   const refreshUser = async () => {
-    return;
+    try {
+      const me = await authService.me();
+      setUser(me);
+      localStorage.setItem('user', JSON.stringify(me));
+    } catch {
+      logout();
+    }
   };
 
   return (

@@ -8,6 +8,7 @@ import {
 import { JobApplication, JobStatus } from '../types/models';
 import { jobsService, JobsResponse, JobFilters } from '../services/jobsService';
 import { useToastContext } from './ToastContext';
+import { useAuth } from '../hooks/useAuth';
 
 interface JobsContextValue {
   jobs: JobApplication[];
@@ -37,8 +38,10 @@ export function JobsProvider({ children }: { children: ReactNode }) {
   const [filters, setFiltersState] = useState<JobFilters>(defaultFilters);
   const [loading, setLoading] = useState(false);
   const { pushToast } = useToastContext();
+  const { isAuthenticated } = useAuth();
 
   const load = async (f: JobFilters = filters) => {
+    if (!isAuthenticated) return;
     setLoading(true);
     try {
       const res: JobsResponse = await jobsService.list(f);
@@ -52,9 +55,14 @@ export function JobsProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    load();
+    if (isAuthenticated) {
+      load();
+    } else {
+      setJobs([]);
+      setTotal(0);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.page, filters.pageSize, filters.sortBy, filters.sortDir, filters.status, filters.search]);
+  }, [isAuthenticated, filters.page, filters.pageSize, filters.sortBy, filters.sortDir, filters.status, filters.search]);
 
   const setFilters = (patch: Partial<JobFilters>) => {
     setFiltersState((prev) => ({ ...prev, page: 1, ...patch }));

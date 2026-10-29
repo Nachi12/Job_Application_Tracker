@@ -33,9 +33,12 @@ export default function DarkModeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="rounded-lg border border-gray-200 p-2 dark:border-gray-700"
+      type="button"
+      className="inline-flex items-center justify-center h-9 w-9 rounded-xl border border-violet-200/80 bg-white/80 text-slate-600 shadow-sm backdrop-blur-md transition-all hover:border-violet-400 hover:bg-white hover:text-violet-600 dark:border-violet-900/50 dark:bg-[#18102B]/80 dark:text-violet-200 dark:hover:border-violet-700 dark:hover:text-white"
+      title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+      aria-label="Toggle color theme"
     >
-      {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+      {theme === 'dark' ? <Sun className="h-4 w-4 text-amber-400 transition-transform duration-200 hover:rotate-45" /> : <Moon className="h-4 w-4 text-violet-600 transition-transform duration-200 hover:-rotate-12" />}
     </button>
   );
 }

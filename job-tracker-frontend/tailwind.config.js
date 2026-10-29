@@ -8,6 +8,12 @@ export default {
   theme: {
     extend: {
       colors: {
+        primary: {
+          DEFAULT: '#834DFB',
+          dark: '#6F38E8',
+          hover: '#6F38E8',
+          light: '#ECE7FE',
+        },
         // Quantus Palette 2025
         violet: {
           50: '#F5F3FF',   // Blue Chalk tint

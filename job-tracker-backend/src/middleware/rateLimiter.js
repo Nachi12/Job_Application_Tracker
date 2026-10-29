@@ -1,9 +1,10 @@
 import rateLimit from 'express-rate-limit';
+import { env } from '../config/env.js';
 
 // General API limiter
 export const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 min
-  max: 200,
+  max: env.nodeEnv === 'development' ? 1000 : 200,
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: 'Too many requests, please try again later' }
@@ -12,7 +13,7 @@ export const apiLimiter = rateLimit({
 // Stricter auth limiter (login/register/forgot)
 export const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 10,
+  max: env.nodeEnv === 'development' ? 200 : 20,
   skipSuccessfulRequests: true,
   standardHeaders: true,
   legacyHeaders: false,

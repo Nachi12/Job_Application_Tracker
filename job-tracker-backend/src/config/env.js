@@ -4,7 +4,7 @@ dotenv.config();
 
 export const env = {
   nodeEnv: process.env.NODE_ENV || 'development',
-  port: process.env.PORT || 5001,
+  port: process.env.PORT || 5005,
   mongoUri: process.env.MONGODB_URI || process.env.MONGO_URI || 'mongodb+srv://jobtrackeruser:Test1234@cluster0.oqsk4w4.mongodb.net/?appName=Cluster0',
   jwtSecret: process.env.JWT_SECRET || 'hirelog_default_jwt_secret_key_2025',
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',

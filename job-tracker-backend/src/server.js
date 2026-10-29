@@ -1,6 +1,7 @@
 import { env } from './config/env.js';
 import { connectDB } from './config/db.js';
 import { createApp } from './app.js';
+import { ensureDemoUser } from './utils/seedDemo.js';
 
 const start = async () => {
   try {
@@ -8,6 +9,8 @@ const start = async () => {
 
     await connectDB();
     console.log('MongoDB connected');
+
+    await ensureDemoUser();
 
     const app = createApp();
 

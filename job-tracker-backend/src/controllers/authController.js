@@ -11,6 +11,7 @@ import {
 } from '../utils/validators.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { sendPasswordResetEmail } from '../utils/emailService.js';
+import { ensureDemoUser } from '../utils/seedDemo.js';
 
 const signToken = (user) =>
   jwt.sign(
@@ -36,20 +37,22 @@ export const register = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
   validateRequired(['name', 'email', 'password'], req.body);
-  validateEmail(email);
+
+  const normalizedEmail = String(email).trim().toLowerCase();
+  const trimmedName = String(name).trim();
+
+  validateEmail(normalizedEmail);
   validatePassword(password);
 
-  const existing = await User.findOne({ email });
+  const existing = await User.findOne({ email: normalizedEmail });
   if (existing) {
-    throw new ApiError(400, 'Email already registered');
+    throw new ApiError(400, 'An account with this email address already exists');
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-
   const user = await User.create({
-    name,
-    email,
-    password: hashedPassword
+    name: trimmedName,
+    email: normalizedEmail,
+    password
   });
 
   const token = signToken(user);
@@ -62,28 +65,37 @@ export const register = asyncHandler(async (req, res) => {
 
 
 export const getMe = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.sub).select('-password');
+  const user = await User.findById(req.user.sub);
 
   if (!user) {
     throw new ApiError(404, 'User not found');
   }
 
-  res.json(user);
+  res.json(buildUserResponse(user));
 });
+
 export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   validateRequired(['email', 'password'], req.body);
-  validateEmail(email);
 
-  const user = await User.findOne({ email });
-  if (!user) {
-    throw new ApiError(401, 'Invalid credentials');
+  const normalizedEmail = String(email).trim().toLowerCase();
+  validateEmail(normalizedEmail);
+
+  let user = await User.findOne({ email: normalizedEmail });
+
+  // If logging in as demo user and it does not exist yet, initialize it
+  if (!user && normalizedEmail === 'demo@hirelog.app' && password === 'Password123!') {
+    user = await ensureDemoUser();
   }
 
-  const isMatch = await bcrypt.compare(password, user.password);
+  if (!user) {
+    throw new ApiError(401, 'Invalid email or password');
+  }
+
+  const isMatch = await user.comparePassword(password);
   if (!isMatch) {
-    throw new ApiError(401, 'Invalid credentials');
+    throw new ApiError(401, 'Invalid email or password');
   }
 
   const token = signToken(user);
