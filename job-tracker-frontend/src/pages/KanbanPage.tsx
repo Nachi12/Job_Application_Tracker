@@ -12,11 +12,11 @@ export default function KanbanPage() {
   return (
     <div className="space-y-4 max-w-7xl mx-auto pb-10">
       <div>
-        <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
-          Application Kanban Pipeline
+        <h1 className="font-serif text-2xl font-bold text-[#183451] dark:text-[#FAF7F2] tracking-tight">
+          Kanban Pipeline
         </h1>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-          Drag and drop cards across stages with instant optimistic updates and persistent sync.
+        <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
+          Visual progression across stages with instant optimistic updates and persistent sync.
         </p>
       </div>
       <KanbanBoard jobs={jobs} onStatusChange={handleStatusChange} />

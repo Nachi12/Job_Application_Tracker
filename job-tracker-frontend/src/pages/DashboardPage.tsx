@@ -26,13 +26,13 @@ export default function DashboardPage() {
   return (
     <div className="space-y-5 pb-10">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-violet-100 dark:border-haiti-800 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-[#D4AF83]/30 dark:border-white/10 pb-4">
         <div>
-          <h1 className="text-xl font-bold text-haiti-900 dark:text-white tracking-tight">
-            Job Search
+          <h1 className="font-serif text-2xl font-bold text-[#183451] dark:text-[#FAF7F2] tracking-tight">
+            Pipeline Overview
           </h1>
-          <p className="text-xs text-slate-500 dark:text-haiti-300 font-normal mt-0.5">
-            Overview of your active application pipeline and response metrics.
+          <p className="text-xs text-stone-500 dark:text-stone-400 font-normal mt-0.5">
+            Deliberate management of active applications, interview momentum, and conversion rates.
           </p>
         </div>
 
@@ -132,28 +132,28 @@ export default function DashboardPage() {
               <h3 className="text-xs font-bold uppercase tracking-wider text-haiti-900 dark:text-white">Recent Applications</h3>
               <button
                 onClick={() => navigate('/applications')}
-                className="text-xs font-semibold text-violet-600 dark:text-violet-400 flex items-center gap-0.5 hover:underline"
+                className="text-xs font-semibold text-[#A9501C] dark:text-[#D4AF83] flex items-center gap-0.5 hover:underline"
               >
                 View All <ChevronRight size={13} />
               </button>
             </div>
 
-            <div className="divide-y divide-violet-100 dark:divide-haiti-800 text-xs">
+            <div className="divide-y divide-[#D4AF83]/20 dark:divide-white/10 text-xs">
               {jobs.slice(0, 5).map((job) => (
                 <div
                   key={job._id || job.id}
                   onClick={() => navigate(`/applications/${job._id || job.id}`)}
-                  className="py-2.5 flex items-center justify-between cursor-pointer hover:bg-violet-50/50 dark:hover:bg-haiti-900/60 px-2 rounded-lg transition"
+                  className="py-2.5 flex items-center justify-between cursor-pointer hover:bg-[#FAF7F2] dark:hover:bg-[#11253A]/70 px-2 rounded-lg transition"
                 >
                   <div>
-                    <span className="font-semibold text-haiti-900 dark:text-white">{job.role}</span>
-                    <span className="text-slate-400 font-normal ml-2">at {job.companyName}</span>
+                    <span className="font-semibold text-[#183451] dark:text-white">{job.role}</span>
+                    <span className="text-stone-400 font-normal ml-2">at {job.companyName}</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="rounded-md bg-violet-50 px-2 py-0.5 text-[11px] font-medium text-violet-600 dark:bg-haiti-800 dark:text-violet-300">
+                    <span className="rounded-md bg-[#F3ECDE] border border-[#D4AF83]/50 px-2 py-0.5 text-[11px] font-semibold text-[#183451] dark:bg-[#11253A] dark:text-[#D4AF83]">
                       {job.status}
                     </span>
-                    <span className="text-slate-400 text-[11px]">
+                    <span className="text-stone-400 text-[11px]">
                       {new Date(job.appliedDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                     </span>
                   </div>

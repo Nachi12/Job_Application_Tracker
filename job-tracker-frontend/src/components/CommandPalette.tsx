@@ -136,17 +136,17 @@ export default function CommandPalette({ open, onClose, onOpenAddJob }: Props) {
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 bg-haiti-950/60 backdrop-blur-xs p-4">
       <div className="w-full max-w-xl rounded-2xl border border-violet-200 bg-white dark:border-haiti-800 dark:bg-haiti-900 shadow-2xl overflow-hidden animate-fade-scale">
         {/* Search Header */}
-        <div className="flex items-center gap-3 px-4 py-3 border-b border-violet-100 dark:border-haiti-800">
-          <Search size={18} className="text-violet-500" />
+        <div className="flex items-center gap-3 px-4 py-3 border-b border-[#D4AF83]/30 dark:border-white/10">
+          <Search size={18} className="text-[#A9501C]" />
           <input
             autoFocus
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search commands, tools, or shortcuts... (Cmd+K)"
-            className="w-full bg-transparent text-sm text-haiti-900 dark:text-white placeholder:text-slate-400 focus:outline-hidden font-medium"
+            className="w-full bg-transparent text-sm text-[#183451] dark:text-white placeholder:text-stone-400 focus:outline-hidden font-medium"
           />
-          <button onClick={onClose} className="text-slate-400 hover:text-haiti-900 dark:hover:text-white">
+          <button onClick={onClose} className="text-stone-400 hover:text-[#183451] dark:hover:text-white">
             <X size={16} />
           </button>
         </div>
@@ -154,7 +154,7 @@ export default function CommandPalette({ open, onClose, onOpenAddJob }: Props) {
         {/* Results List */}
         <div className="max-h-80 overflow-y-auto p-2 space-y-1">
           {filtered.length === 0 ? (
-            <div className="p-6 text-center text-xs text-slate-400">
+            <div className="p-6 text-center text-xs text-stone-400">
               No matching commands or actions found.
             </div>
           ) : (
@@ -164,10 +164,10 @@ export default function CommandPalette({ open, onClose, onOpenAddJob }: Props) {
                 <button
                   key={item.id}
                   onClick={item.run}
-                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-xs font-semibold text-haiti-900 dark:text-haiti-100 hover:bg-violet-50 hover:text-violet-600 dark:hover:bg-haiti-800 transition"
+                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-xs font-semibold text-[#183451] dark:text-[#FAF7F2] hover:bg-[#F3ECDE]/60 hover:text-[#A9501C] dark:hover:bg-[#11253A] transition"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="p-1.5 rounded-lg bg-violet-50 text-violet-500 dark:bg-haiti-800">
+                    <div className="p-1.5 rounded-lg bg-[#FAF7F2] text-[#A9501C] dark:bg-[#11253A]">
                       <Icon size={16} />
                     </div>
                     <span>{item.title}</span>

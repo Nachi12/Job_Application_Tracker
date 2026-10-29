@@ -108,7 +108,7 @@ export default function ApplicationDetailPage() {
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-violet-600 border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#A9501C] border-t-transparent" />
       </div>
     );
   }
@@ -191,13 +191,13 @@ export default function ApplicationDetailPage() {
       </div>
 
       {/* Tabs */}
-      <div className="border-b border-violet-100 dark:border-haiti-800 flex gap-6 text-xs font-semibold">
+      <div className="border-b border-[#D4AF83]/30 dark:border-white/10 flex gap-6 text-xs font-semibold">
         <button
           onClick={() => setActiveTab('overview')}
           className={`pb-2.5 transition border-b-2 ${
             activeTab === 'overview'
-              ? 'border-violet-600 text-violet-600 dark:border-violet-400 dark:text-violet-400 font-bold'
-              : 'border-transparent text-slate-500 hover:text-slate-800 dark:text-haiti-300'
+              ? 'border-[#A9501C] text-[#A9501C] dark:border-[#D4AF83] dark:text-[#D4AF83] font-bold'
+              : 'border-transparent text-stone-500 hover:text-[#183451] dark:text-stone-300'
           }`}
         >
           Overview & Description
@@ -206,8 +206,8 @@ export default function ApplicationDetailPage() {
           onClick={() => setActiveTab('ai_assistant')}
           className={`pb-2.5 transition border-b-2 flex items-center gap-1.5 ${
             activeTab === 'ai_assistant'
-              ? 'border-violet-600 text-violet-600 dark:border-violet-400 dark:text-violet-400 font-bold'
-              : 'border-transparent text-slate-500 hover:text-slate-800 dark:text-haiti-300'
+              ? 'border-[#A9501C] text-[#A9501C] dark:border-[#D4AF83] dark:text-[#D4AF83] font-bold'
+              : 'border-transparent text-stone-500 hover:text-[#183451] dark:text-stone-300'
           }`}
         >
           <Sparkles size={13} /> AI Application Workspace
@@ -216,8 +216,8 @@ export default function ApplicationDetailPage() {
           onClick={() => setActiveTab('timeline')}
           className={`pb-2.5 transition border-b-2 ${
             activeTab === 'timeline'
-              ? 'border-violet-600 text-violet-600 dark:border-violet-400 dark:text-violet-400 font-bold'
-              : 'border-transparent text-slate-500 hover:text-slate-800 dark:text-haiti-300'
+              ? 'border-[#A9501C] text-[#A9501C] dark:border-[#D4AF83] dark:text-[#D4AF83] font-bold'
+              : 'border-transparent text-stone-500 hover:text-[#183451] dark:text-stone-300'
           }`}
         >
           Activity Timeline ({events.length})

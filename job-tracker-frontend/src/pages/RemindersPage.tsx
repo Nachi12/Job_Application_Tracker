@@ -60,13 +60,13 @@ export default function RemindersPage() {
 
   return (
     <div className="space-y-5 max-w-6xl mx-auto pb-10">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-violet-100 dark:border-haiti-800 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-[#D4AF83]/30 dark:border-white/10 pb-4">
         <div>
-          <h1 className="text-xl font-bold text-haiti-900 dark:text-white flex items-center gap-2 tracking-tight">
-            <Bell className="text-violet-500" size={20} /> Smart Reminders & Follow-ups
+          <h1 className="font-serif text-2xl font-bold text-[#183451] dark:text-[#FAF7F2] flex items-center gap-2 tracking-tight">
+            <Bell className="text-[#A9501C]" size={20} /> Action Reminders & Deadlines
           </h1>
-          <p className="text-xs text-slate-500 dark:text-haiti-300 font-normal mt-0.5">
-            Stay on top of recruiter follow-ups, upcoming interviews, and application deadlines.
+          <p className="text-xs text-stone-500 dark:text-stone-400 font-normal mt-0.5">
+            Stay deliberate with recruiter follow-ups, upcoming interviews, and critical response dates.
           </p>
         </div>
         <button

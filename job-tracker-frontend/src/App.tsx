@@ -24,8 +24,8 @@ function ProtectedRoute({ children }: { children: ReactNode }) {
 
   if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="h-10 w-10 animate-spin rounded-full border-4 border-violet-500 border-t-transparent" />
+      <div className="flex h-screen items-center justify-center bg-[#FAF7F2] dark:bg-[#0B1623]">
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#A9501C] border-t-transparent" />
       </div>
     );
   }

@@ -74,15 +74,15 @@ export default function CalendarView({ jobs = [], baseDate, onMonthChange }: Pro
           e.stopPropagation();
           handleDateClick(date);
         }}
-        className={`relative z-10 cursor-pointer rounded-lg border p-2 text-xs hover:bg-slate-200 dark:hover:bg-slate-700 ${
-          isToday ? 'bg-blue-100 dark:bg-blue-900' : ''
+        className={`relative z-10 cursor-pointer rounded-lg border p-2 text-xs transition-colors hover:bg-[#FAF7F2] dark:hover:bg-[#11253A] ${
+          isToday ? 'bg-[#F3ECDE] border-[#A9501C] text-[#A9501C] dark:bg-[#183451] dark:text-[#D4AF83]' : 'border-[#D4AF83]/30 dark:border-white/10'
         }`}
       >
         <div className="font-semibold">{d}</div>
 
         {jobsOnDate.length > 0 && (
-          <div className="mt-1 text-[10px] text-blue-600 pointer-events-none">
-            {jobsOnDate.length} job
+          <div className="mt-1 text-[10px] font-bold text-[#A9501C] dark:text-[#D4AF83] pointer-events-none">
+            {jobsOnDate.length} {jobsOnDate.length === 1 ? 'job' : 'jobs'}
           </div>
         )}
       </div>
@@ -90,23 +90,33 @@ export default function CalendarView({ jobs = [], baseDate, onMonthChange }: Pro
   }
 
   return (
-    <div className="rounded-xl border p-4">
+    <div className="quantus-card p-5">
       {/* HEADER */}
-      <div className="mb-3 flex items-center justify-between">
-        <button onClick={() => onMonthChange(-1)}>◀</button>
+      <div className="mb-4 flex items-center justify-between">
+        <button
+          onClick={() => onMonthChange(-1)}
+          className="h-8 w-8 rounded-lg border border-[#D4AF83]/50 flex items-center justify-center text-xs hover:border-[#A9501C] hover:text-[#A9501C] transition"
+        >
+          ◀
+        </button>
 
-        <div className="font-semibold">
+        <div className="font-serif font-bold text-base text-[#183451] dark:text-[#FAF7F2]">
           {safeBaseDate.toLocaleString('default', {
             month: 'long',
             year: 'numeric'
           })}
         </div>
 
-        <button onClick={() => onMonthChange(1)}>▶</button>
+        <button
+          onClick={() => onMonthChange(1)}
+          className="h-8 w-8 rounded-lg border border-[#D4AF83]/50 flex items-center justify-center text-xs hover:border-[#A9501C] hover:text-[#A9501C] transition"
+        >
+          ▶
+        </button>
       </div>
 
       {/* WEEK DAYS */}
-      <div className="grid grid-cols-7 gap-2 text-center text-xs font-semibold">
+      <div className="grid grid-cols-7 gap-2 text-center text-xs font-semibold uppercase tracking-wider text-[#183451]/60 dark:text-[#D4AF83]">
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d, i) => (
           <div key={`weekday-${i}`}>{d}</div>
         ))}

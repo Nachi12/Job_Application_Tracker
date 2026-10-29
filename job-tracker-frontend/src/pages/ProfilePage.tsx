@@ -25,27 +25,27 @@ export default function ProfilePage() {
 
   return (
     <div className="space-y-5 max-w-5xl mx-auto pb-10">
-      <div className="border-b border-violet-100 dark:border-haiti-800 pb-4">
-        <h1 className="text-xl font-bold text-haiti-900 dark:text-white tracking-tight flex items-center gap-2">
-          <User className="text-violet-500" size={20} /> Career Profile & Preferences
+      <div className="border-b border-[#D4AF83]/30 dark:border-white/10 pb-4">
+        <h1 className="font-serif text-2xl font-bold text-[#183451] dark:text-[#FAF7F2] tracking-tight flex items-center gap-2">
+          <User className="text-[#A9501C]" size={20} /> Candidate Profile & Target Criteria
         </h1>
-        <p className="text-xs text-slate-500 dark:text-haiti-300 font-normal mt-0.5">
-          Maintain your professional identity and skills profile for AI matching.
+        <p className="text-xs text-stone-500 dark:text-stone-400 font-normal mt-0.5">
+          Maintain your professional identity and skills profile for high-confidence AI matching.
         </p>
       </div>
 
       {/* Profile Completeness Banner */}
-      <div className="quantus-card p-5 border-l-4 border-l-violet-500 space-y-3">
+      <div className="quantus-card p-5 border-l-4 border-l-[#A9501C] space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Sparkles size={16} className="text-violet-500" />
-            <h3 className="text-sm font-bold text-haiti-900 dark:text-white">Profile Completeness</h3>
+            <Sparkles size={16} className="text-[#A9501C]" />
+            <h3 className="font-serif text-sm font-bold text-[#183451] dark:text-white">Profile Readiness</h3>
           </div>
-          <span className="text-xs font-bold text-violet-600 dark:text-violet-400">{completionPercentage}% Complete</span>
+          <span className="text-xs font-bold text-[#A9501C] dark:text-[#D4AF83]">{completionPercentage}% Complete</span>
         </div>
 
-        <div className="w-full bg-violet-100 dark:bg-haiti-950 h-2 rounded-full overflow-hidden border border-violet-100 dark:border-haiti-800">
-          <div className="bg-violet-600 h-full rounded-full transition-all duration-500" style={{ width: `${completionPercentage}%` }} />
+        <div className="w-full bg-[#F3ECDE] dark:bg-[#11253A] h-2 rounded-full overflow-hidden border border-[#D4AF83]/40 dark:border-white/10">
+          <div className="bg-[#A9501C] h-full rounded-full transition-all duration-500" style={{ width: `${completionPercentage}%` }} />
         </div>
 
         <p className="text-xs text-slate-500 dark:text-haiti-300">

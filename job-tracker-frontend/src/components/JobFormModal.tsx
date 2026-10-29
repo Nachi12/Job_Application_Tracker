@@ -205,7 +205,7 @@ export default function JobFormModal({
             <button
               type="submit"
               disabled={saving}
-              className="rounded-lg bg-indigo-600 px-4 py-1.5 font-semibold text-white hover:bg-indigo-700 shadow-xs"
+              className="rounded-lg bg-[#A9501C] px-4 py-1.5 font-semibold text-[#FAF7F2] hover:bg-[#8E3F14] shadow-xs transition"
             >
               {saving ? 'Saving...' : 'Save Application'}
             </button>

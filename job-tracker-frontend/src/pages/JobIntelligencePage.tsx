@@ -40,12 +40,12 @@ export default function JobIntelligencePage() {
   return (
     <div className="space-y-5 max-w-5xl mx-auto pb-10">
       {/* Header */}
-      <div className="border-b border-violet-100 dark:border-haiti-800 pb-4">
-        <h1 className="text-xl font-bold text-haiti-900 dark:text-white tracking-tight">
+      <div className="border-b border-[#D4AF83]/30 dark:border-white/10 pb-4">
+        <h1 className="font-serif text-2xl font-bold text-[#183451] dark:text-[#FAF7F2] tracking-tight">
           Job Intelligence
         </h1>
-        <p className="text-xs text-slate-500 dark:text-haiti-300 font-normal mt-0.5">
-          Understand a target role before you apply. Evaluate resume keyword alignment and skill gaps.
+        <p className="text-xs text-stone-500 dark:text-stone-400 font-normal mt-0.5">
+          Evaluate target roles with deep keyword alignment and skill gap diagnostics.
         </p>
       </div>
 
@@ -94,7 +94,7 @@ export default function JobIntelligencePage() {
             </div>
             <div className="p-4 space-y-0.5">
               <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">Technical Fit</div>
-              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 tabular-nums">{matchScore.technicalScore}%</div>
+              <div className="text-2xl font-bold text-riviera-700 dark:text-riviera-300 tabular-nums">{matchScore.technicalScore}%</div>
               <p className="text-[10px] text-slate-400 font-normal">Stack alignment</p>
             </div>
             <div className="p-4 space-y-0.5">

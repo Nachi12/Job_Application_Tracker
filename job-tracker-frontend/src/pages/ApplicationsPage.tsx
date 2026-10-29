@@ -52,13 +52,13 @@ export default function ApplicationsPage() {
   return (
     <div className="space-y-4 pb-10">
       {/* Page Header */}
-      <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center border-b border-violet-100 dark:border-haiti-800 pb-4">
+      <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center border-b border-[#D4AF83]/30 dark:border-white/10 pb-4">
         <div>
-          <h1 className="text-xl font-bold text-haiti-900 dark:text-white tracking-tight">
+          <h1 className="font-serif text-2xl font-bold text-[#183451] dark:text-[#FAF7F2] tracking-tight">
             Applications
           </h1>
-          <p className="text-xs text-slate-500 dark:text-haiti-300 font-normal mt-0.5">
-            Track and manage your job search pipeline.
+          <p className="text-xs text-stone-500 dark:text-stone-400 font-normal mt-0.5">
+            Track and deliberate every opportunity across your career pipeline.
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -82,10 +82,10 @@ export default function ApplicationsPage() {
       {/* Filter Bar */}
       <div className="flex flex-wrap items-center gap-2 text-xs">
         <div className="relative min-w-[240px] flex-1">
-          <Search size={14} className="absolute left-3 top-2.5 text-violet-500" />
+          <Search size={14} className="absolute left-3 top-2.5 text-[#A9501C]" />
           <input
             placeholder="Filter by company, role, location..."
-            className="w-full rounded-lg border border-violet-200 bg-white pl-8 pr-3 py-1.5 text-xs font-normal text-haiti-900 focus:border-violet-500 focus:outline-hidden dark:border-haiti-800 dark:bg-haiti-900 dark:text-white"
+            className="w-full rounded-xl border border-[#D4AF83]/50 bg-white pl-8 pr-3 py-1.5 text-xs font-normal text-[#183451] focus:border-[#A9501C] focus:outline-hidden dark:border-white/15 dark:bg-[#11253A] dark:text-white"
             value={filters.search ?? ''}
             onChange={handleSearchChange}
           />
@@ -94,7 +94,7 @@ export default function ApplicationsPage() {
         <select
           value={filters.status ?? 'ALL'}
           onChange={handleStatusChange}
-          className="rounded-lg border border-violet-200 bg-white px-3 py-1.5 text-xs font-medium text-haiti-900 dark:border-haiti-800 dark:bg-haiti-900 dark:text-white"
+          className="rounded-xl border border-[#D4AF83]/50 bg-white px-3 py-1.5 text-xs font-medium text-[#183451] dark:border-white/15 dark:bg-[#11253A] dark:text-white"
         >
           <option value="ALL">All Statuses</option>
           {JOB_STATUS_OPTIONS.map((opt) => (

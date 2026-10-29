@@ -68,13 +68,13 @@ export default function ResumesPage() {
 
   return (
     <div className="space-y-5 max-w-6xl mx-auto pb-10">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-violet-100 dark:border-haiti-800 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-[#D4AF83]/30 dark:border-white/10 pb-4">
         <div>
-          <h1 className="text-xl font-bold text-haiti-900 dark:text-white flex items-center gap-2 tracking-tight">
-            <FileText className="text-violet-500" size={20} /> Resume Versions Workspace
+          <h1 className="font-serif text-2xl font-bold text-[#183451] dark:text-[#FAF7F2] flex items-center gap-2 tracking-tight">
+            <FileText className="text-[#A9501C]" size={20} /> Resume Portfolio & Versions
           </h1>
-          <p className="text-xs text-slate-500 dark:text-haiti-300 font-normal mt-0.5">
-            Maintain multiple versions of your resume for target role matching and AI analysis.
+          <p className="text-xs text-stone-500 dark:text-stone-400 font-normal mt-0.5">
+            Maintain curated resumes tailored for specific industries, seniorities, and AI evaluations.
           </p>
         </div>
         <button
@@ -87,7 +87,7 @@ export default function ResumesPage() {
 
       {loading ? (
         <div className="flex h-32 items-center justify-center">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-violet-600 border-t-transparent" />
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-[#A9501C] border-t-transparent" />
         </div>
       ) : (
         <div className="grid gap-4 md:grid-cols-2">

@@ -53,29 +53,29 @@ export default function ApplicationsOverTimeChart({ jobs }: Props) {
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={data}>
               <defs>
-                <linearGradient id="violetGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#834DFB" stopOpacity={0.4} />
-                  <stop offset="95%" stopColor="#834DFB" stopOpacity={0} />
+                <linearGradient id="rivieraGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#183451" stopOpacity={0.35} />
+                  <stop offset="95%" stopColor="#A9501C" stopOpacity={0.02} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" className="stroke-slate-200/60 dark:stroke-haiti-800" />
-              <XAxis dataKey="date" tick={{ fontSize: 11, fill: '#834DFB' }} />
-              <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: '#834DFB' }} />
+              <CartesianGrid strokeDasharray="3 3" className="stroke-[#D4AF83]/20 dark:stroke-white/10" />
+              <XAxis dataKey="date" tick={{ fontSize: 11, fill: '#183451' }} />
+              <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: '#183451' }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#18102B',
-                  borderColor: '#834DFB',
+                  backgroundColor: '#183451',
+                  borderColor: '#D4AF83',
                   borderRadius: '12px',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4)',
                   padding: '8px 12px'
                 }}
                 itemStyle={{
-                  color: '#F5F3FF',
+                  color: '#FAF7F2',
                   fontSize: '12px',
                   fontWeight: '700'
                 }}
                 labelStyle={{
-                  color: '#F0E100',
+                  color: '#D4AF83',
                   fontSize: '12px',
                   fontWeight: '800'
                 }}
@@ -83,10 +83,10 @@ export default function ApplicationsOverTimeChart({ jobs }: Props) {
               <Area
                 type="monotone"
                 dataKey="count"
-                stroke="#834DFB"
+                stroke="#A9501C"
                 strokeWidth={3}
                 fillOpacity={1}
-                fill="url(#violetGradient)"
+                fill="url(#rivieraGradient)"
               />
             </AreaChart>
           </ResponsiveContainer>

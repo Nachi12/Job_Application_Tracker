@@ -18,18 +18,18 @@ export default function ReminderList({ jobs }: Props) {
 
   return (
     <div className="quantus-card p-4 text-xs space-y-3">
-      <div className="text-sm font-bold text-haiti-900 dark:text-white">Upcoming deadlines</div>
+      <div className="font-serif text-sm font-bold text-[#183451] dark:text-white">Upcoming deadlines</div>
       {upcoming.length === 0 ? (
-        <div className="text-xs text-slate-500 dark:text-haiti-300">
+        <div className="text-xs text-stone-500 dark:text-stone-400">
           No upcoming deadlines. You are all caught up.
         </div>
       ) : (
         <ul className="space-y-2">
           {upcoming.map(({ job, date }) => (
-            <li key={job.id || job._id} className="flex items-center justify-between border-b border-violet-50 dark:border-haiti-800/50 pb-1.5 last:border-0 last:pb-0">
+            <li key={job.id || job._id} className="flex items-center justify-between border-b border-[#D4AF83]/20 dark:border-white/5 pb-1.5 last:border-0 last:pb-0">
               <div>
-                <div className="font-semibold text-haiti-900 dark:text-white">{job.role}</div>
-                <div className="text-[11px] text-slate-500 dark:text-haiti-300">
+                <div className="font-semibold text-[#183451] dark:text-white">{job.role}</div>
+                <div className="text-[11px] text-stone-500 dark:text-stone-400">
                   {job.companyName || (job as any).company}
                 </div>
               </div>

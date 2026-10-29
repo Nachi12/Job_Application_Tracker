@@ -16,12 +16,12 @@ export default function SettingsPage() {
 
   return (
     <div className="space-y-5 max-w-5xl mx-auto pb-10">
-      <div className="border-b border-violet-100 dark:border-haiti-800 pb-4">
-        <h1 className="text-xl font-bold text-haiti-900 dark:text-white tracking-tight flex items-center gap-2">
-          <Settings className="text-violet-500" size={20} /> Application & System Settings
+      <div className="border-b border-[#D4AF83]/30 dark:border-white/10 pb-4">
+        <h1 className="font-serif text-2xl font-bold text-[#183451] dark:text-[#FAF7F2] tracking-tight flex items-center gap-2">
+          <Settings className="text-[#A9501C]" size={20} /> Workspace & Account Settings
         </h1>
-        <p className="text-xs text-slate-500 dark:text-haiti-300 font-normal mt-0.5">
-          Manage your account, AI preferences, notifications, and application settings.
+        <p className="text-xs text-stone-500 dark:text-stone-400 font-normal mt-0.5">
+          Configure security, candidate parameters, and AI model parameters.
         </p>
       </div>
 
@@ -45,8 +45,8 @@ export default function SettingsPage() {
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs transition ${
                   isActive
-                    ? 'bg-violet-600 text-white font-bold'
-                    : 'text-slate-600 dark:text-haiti-300 hover:bg-violet-50 dark:hover:bg-haiti-900 font-medium'
+                    ? 'bg-[#183451] text-[#FAF7F2] font-bold shadow-xs'
+                    : 'text-[#183451]/75 dark:text-stone-300 hover:bg-[#F3ECDE]/60 hover:text-[#A9501C] dark:hover:bg-[#11253A] font-medium'
                 }`}
               >
                 <div className="flex items-center gap-2.5">

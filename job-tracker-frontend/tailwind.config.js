@@ -67,44 +67,48 @@ export default {
           light: '#F3ECDE',
           accent: '#A9501C',
         },
-        // Quantus Palette 2025 (Legacy compatibility)
+        // Universal token mapping to cascade the Mediterranean palette everywhere
         violet: {
-          50: '#F5F3FF',   // Blue Chalk tint
-          100: '#ECE7FE',
-          200: '#D7CBFE',
-          300: '#BCA4FD',
-          400: '#A07BFB',
-          500: '#834DFB',  // Electric Violet (Primary Brand Accent)
-          600: '#6F38E8',
-          700: '#5625C7',
-          800: '#431B9C',
-          900: '#321379',
+          50: '#FAF7F2',   // Soft Ivory background
+          100: '#F3ECDE',  // Soft Ivory tint
+          200: '#EBDDC6',  // Sand Linen subtle border
+          300: '#D4AF83',  // Sand Linen
+          400: '#DC8963',  // Warm Terracotta tint
+          500: '#183451',  // Riviera Blue
+          600: '#A9501C',  // Terracotta accent
+          700: '#8E3F14',  // Terracotta dark
+          800: '#183451',  // Riviera Blue dark
+          900: '#11253A',  // Riviera deep
+          950: '#0B1623',  // Riviera night
         },
         turbo: {
-          400: '#FFF545',
-          500: '#F0E100',  // Turbo (Vivid Yellow Accent)
-          600: '#D4C600',
-          700: '#B0A400',
+          400: '#DFC8A5',
+          500: '#A9501C',  // Terracotta accent
+          600: '#8E3F14',
+          700: '#753413',
         },
         haiti: {
-          50: '#F5F3FF',   // Blue Chalk
-          100: '#EAE5F7',
-          200: '#D0C6EB',
-          300: '#A897D8',
-          700: '#302252',
-          800: '#21163F',
-          900: '#18102B',  // Haiti (Deep Dark Purple-Black)
-          950: '#0F091F',
+          50: '#FAF7F2',   // Soft Ivory
+          100: '#F3ECDE',
+          200: '#EBDDC6',
+          300: '#D4AF83',  // Sand Linen
+          700: '#1B3F63',
+          800: '#183451',  // Riviera Blue
+          900: '#11253A',  // Riviera deep
+          950: '#0B1623',  // Riviera night
         },
-        chalk: '#F5F3FF',  // Blue Chalk (Light Background)
+        chalk: '#FAF7F2',  // Soft Ivory
       },
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+        serif: ['"Playfair Display"', 'Georgia', 'serif'],
       },
       boxShadow: {
-        'violet-glow': '0 0 20px -3px rgba(131, 77, 251, 0.35)',
-        'turbo-glow': '0 0 15px -2px rgba(240, 225, 0, 0.45)',
-        'card-light': '0 2px 10px rgba(24, 16, 43, 0.04), 0 1px 3px rgba(24, 16, 43, 0.02)',
+        'riviera-glow': '0 0 20px -3px rgba(24, 52, 81, 0.25)',
+        'terracotta-glow': '0 0 15px -2px rgba(169, 80, 28, 0.35)',
+        'violet-glow': '0 0 20px -3px rgba(24, 52, 81, 0.25)',
+        'turbo-glow': '0 0 15px -2px rgba(169, 80, 28, 0.35)',
+        'card-light': '0 1px 3px rgba(24, 52, 81, 0.04), 0 4px 12px rgba(24, 52, 81, 0.03)',
         'card-dark': '0 4px 20px rgba(0, 0, 0, 0.4)',
       }
     },

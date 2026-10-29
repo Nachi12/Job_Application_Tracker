@@ -35,20 +35,20 @@ export default function Topbar({ onOpenCommandPalette, onOpenAddJob, onToggleMob
   };
 
   return (
-    <header className="flex items-center justify-between border-b border-violet-100 bg-white/90 backdrop-blur-xs px-4 md:px-6 py-3 dark:border-haiti-800 dark:bg-haiti-950/90 sticky top-0 z-30">
+    <header className="flex items-center justify-between border-b border-[#D4AF83]/30 bg-white/95 backdrop-blur-xs px-4 md:px-6 py-3 dark:border-white/10 dark:bg-[#0B1623]/95 sticky top-0 z-30">
       {/* Left Title & Mobile Hamburger */}
       <div className="flex items-center gap-3">
         {onToggleMobileMenu && (
           <button
             onClick={onToggleMobileMenu}
-            className="md:hidden flex h-8 w-8 items-center justify-center rounded-lg border border-violet-200 bg-chalk text-haiti-900 dark:border-haiti-800 dark:bg-haiti-900 dark:text-white"
+            className="md:hidden flex h-8 w-8 items-center justify-center rounded-lg border border-[#D4AF83]/50 bg-[#FAF7F2] text-[#183451] dark:border-white/15 dark:bg-[#11253A] dark:text-white"
             title="Open Mobile Navigation"
           >
             <Menu size={16} />
           </button>
         )}
         <div>
-          <h2 className="text-sm md:text-base font-bold tracking-tight text-haiti-900 dark:text-white">
+          <h2 className="font-serif text-sm md:text-base font-bold tracking-tight text-[#183451] dark:text-[#FAF7F2]">
             {getPageTitle()}
           </h2>
         </div>
@@ -58,11 +58,11 @@ export default function Topbar({ onOpenCommandPalette, onOpenAddJob, onToggleMob
       <div className="hidden lg:flex items-center">
         <button
           onClick={onOpenCommandPalette}
-          className="flex items-center gap-2.5 w-72 rounded-lg border border-violet-200 bg-chalk px-3 py-1.5 text-xs text-slate-500 hover:border-violet-300 transition dark:border-haiti-800 dark:bg-haiti-900 dark:text-haiti-300"
+          className="flex items-center gap-2.5 w-72 rounded-lg border border-[#D4AF83]/50 bg-[#FAF7F2] px-3 py-1.5 text-xs text-stone-600 hover:border-[#A9501C] transition dark:border-white/15 dark:bg-[#11253A] dark:text-stone-300"
         >
-          <Search size={14} className="text-violet-500" />
+          <Search size={14} className="text-[#A9501C]" />
           <span className="flex-1 text-left font-normal">Search applications, roles...</span>
-          <kbd className="rounded-md bg-white px-1.5 py-0.5 text-[10px] font-semibold text-slate-400 border border-violet-100 dark:border-haiti-800 dark:bg-haiti-950">
+          <kbd className="rounded-md bg-white px-1.5 py-0.5 text-[10px] font-semibold text-stone-400 border border-[#D4AF83]/40 dark:border-white/15 dark:bg-[#0B1623]">
             ⌘K
           </kbd>
         </button>
@@ -73,7 +73,7 @@ export default function Topbar({ onOpenCommandPalette, onOpenAddJob, onToggleMob
         {/* Mobile Search Button */}
         <button
           onClick={onOpenCommandPalette}
-          className="lg:hidden flex h-8 w-8 items-center justify-center rounded-lg border border-violet-200 bg-chalk text-violet-500 dark:border-haiti-800 dark:bg-haiti-900"
+          className="lg:hidden flex h-8 w-8 items-center justify-center rounded-lg border border-[#D4AF83]/50 bg-[#FAF7F2] text-[#A9501C] dark:border-white/15 dark:bg-[#11253A]"
           title="Search (Cmd+K)"
         >
           <Search size={14} />
@@ -97,12 +97,12 @@ export default function Topbar({ onOpenCommandPalette, onOpenAddJob, onToggleMob
         <NavLink
           to="/profile"
           title="Open Profile Settings"
-          className="hidden items-center gap-2 md:flex p-1 rounded-lg hover:bg-violet-50 dark:hover:bg-haiti-900 transition cursor-pointer"
+          className="hidden items-center gap-2 md:flex p-1 rounded-lg hover:bg-[#F3ECDE]/60 dark:hover:bg-[#11253A] transition cursor-pointer"
         >
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-violet-500 text-xs font-semibold text-white">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#183451] dark:bg-[#FAF7F2] text-xs font-serif font-bold text-[#FAF7F2] dark:text-[#183451] shadow-xs">
             {user?.name ? user.name[0].toUpperCase() : 'U'}
           </div>
-          <span className="text-xs font-semibold text-haiti-900 dark:text-white">
+          <span className="text-xs font-semibold text-[#183451] dark:text-[#FAF7F2]">
             {user?.name?.split(' ')[0] || 'User'}
           </span>
         </NavLink>
@@ -111,7 +111,7 @@ export default function Topbar({ onOpenCommandPalette, onOpenAddJob, onToggleMob
         <button
           onClick={handleLogout}
           title="Logout"
-          className="hidden sm:flex items-center justify-center p-2 rounded-lg border border-violet-200 bg-chalk text-slate-500 hover:text-rose-600 dark:border-haiti-800 dark:bg-haiti-900 dark:text-haiti-300 transition"
+          className="hidden sm:flex items-center justify-center p-2 rounded-lg border border-[#D4AF83]/40 bg-[#FAF7F2] text-stone-500 hover:text-rose-600 dark:border-white/15 dark:bg-[#11253A] dark:text-stone-300 transition"
         >
           <LogOut size={14} />
         </button>

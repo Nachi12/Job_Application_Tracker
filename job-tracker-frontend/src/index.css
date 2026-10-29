@@ -36,78 +36,103 @@
   background: rgba(169, 80, 28, 0.45);
 }
 
-/* Minimal SaaS Component Classes */
+/* Minimal SaaS Component Classes - Mediterranean Artisanal Palette */
 .quantus-card {
   background-color: #FFFFFF;
-  border: 1px solid rgba(24, 16, 43, 0.10);
+  border: 1px solid rgba(212, 175, 131, 0.40);
   border-radius: 0.75rem; /* 12px */
-  box-shadow: none;
-  transition: border-color 0.15s ease-in-out;
+  box-shadow: 0 1px 3px rgba(24, 52, 81, 0.04);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .dark .quantus-card {
-  background-color: #21163F;
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  background-color: #0F1E2E;
+  border: 1px solid rgba(255, 255, 255, 0.09);
   box-shadow: none;
 }
 
 .quantus-card:hover {
-  border-color: rgba(131, 77, 251, 0.25);
+  border-color: rgba(169, 80, 28, 0.4);
 }
 
 .quantus-btn-primary {
-  background-color: #834DFB;
-  color: #FFFFFF;
+  background-color: #A9501C;
+  color: #FAF7F2;
   font-weight: 600;
   border-radius: 0.5rem; /* 8px */
   height: 2.375rem; /* 38px */
   padding: 0 1rem;
-  transition: background-color 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, transform 0.1s ease-in-out;
 }
 
 .quantus-btn-primary:hover {
-  background-color: #6F38E8;
+  background-color: #8E3F14;
+}
+
+.quantus-btn-primary:active {
+  transform: scale(0.99);
 }
 
 .quantus-btn-secondary {
   background-color: #FFFFFF;
-  color: #18102B;
-  border: 1px solid rgba(24, 16, 43, 0.15);
+  color: #183451;
+  border: 1px solid rgba(212, 175, 131, 0.6);
   font-weight: 600;
   border-radius: 0.5rem; /* 8px */
   height: 2.375rem; /* 38px */
   padding: 0 0.875rem;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out;
 }
 
 .dark .quantus-btn-secondary {
-  background-color: #21163F;
-  color: #F5F3FF;
-  border-color: rgba(255, 255, 255, 0.15);
+  background-color: #11253A;
+  color: #FAF7F2;
+  border-color: rgba(212, 175, 131, 0.35);
 }
 
 .quantus-btn-secondary:hover {
-  background-color: rgba(131, 77, 251, 0.05);
-  border-color: #834DFB;
+  background-color: #F3ECDE;
+  border-color: #A9501C;
+  color: #A9501C;
+}
+
+.dark .quantus-btn-secondary:hover {
+  background-color: #183451;
+  border-color: #D4AF83;
+  color: #D4AF83;
 }
 
 .quantus-badge-turbo {
-  background-color: #F0E100;
-  color: #18102B;
+  background-color: #F3ECDE;
+  color: #A9501C;
+  border: 1px solid rgba(212, 175, 131, 0.6);
   font-weight: 700;
   border-radius: 0.375rem;
-  padding: 0.1rem 0.4rem;
+  padding: 0.1rem 0.45rem;
   font-size: 0.6875rem;
   letter-spacing: 0.02em;
 }
 
+.dark .quantus-badge-turbo {
+  background-color: #183451;
+  color: #D4AF83;
+  border-color: rgba(212, 175, 131, 0.3);
+}
+
 .quantus-badge-violet {
-  background-color: rgba(131, 77, 251, 0.08);
-  color: #834DFB;
+  background-color: rgba(24, 52, 81, 0.08);
+  color: #183451;
+  border: 1px solid rgba(24, 52, 81, 0.15);
   font-weight: 600;
   border-radius: 0.375rem;
-  padding: 0.1rem 0.4rem;
+  padding: 0.1rem 0.45rem;
   font-size: 0.6875rem;
+}
+
+.dark .quantus-badge-violet {
+  background-color: rgba(212, 175, 131, 0.12);
+  color: #D4AF83;
+  border-color: rgba(212, 175, 131, 0.25);
 }
 
 /* Modal Backdrops & Animation */

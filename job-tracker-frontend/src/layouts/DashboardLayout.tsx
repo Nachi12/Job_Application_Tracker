@@ -76,23 +76,24 @@ export default function DashboardLayout() {
           <div className="relative w-4/5 max-w-xs bg-white dark:bg-haiti-950 h-full p-5 shadow-2xl flex flex-col justify-between z-10 animate-fade-scale">
             <div className="space-y-6">
               {/* Header */}
-              <div className="flex items-center justify-between border-b border-violet-100 dark:border-haiti-800 pb-4">
+              <div className="flex items-center justify-between border-b border-[#D4AF83]/30 dark:border-white/10 pb-4">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-violet-500 text-white font-extrabold text-sm shadow-violet-glow">
-                    HL
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#183451] dark:bg-[#FAF7F2] text-[#FAF7F2] dark:text-[#183451] font-serif font-bold text-sm shadow-sm relative">
+                    <span className="tracking-tighter">H</span>
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#A9501C] -ml-0.5 mt-2" />
                   </div>
                   <div>
-                    <h1 className="text-base font-extrabold tracking-tight text-haiti-900 dark:text-white">
+                    <h1 className="font-serif text-base font-bold tracking-tight text-[#183451] dark:text-white leading-none">
                       HireLog
                     </h1>
-                    <p className="text-[9px] font-bold text-violet-600 dark:text-violet-400 uppercase tracking-widest flex items-center gap-1">
-                      <Zap size={9} className="fill-turbo-500 text-turbo-500" /> AI JOB OS
+                    <p className="text-[9px] font-semibold text-[#A9501C] uppercase tracking-widest mt-1">
+                      Career OS
                     </p>
                   </div>
                 </div>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-haiti-900 dark:hover:text-white"
+                  className="p-1 rounded-lg text-stone-400 hover:text-[#183451] dark:hover:text-white"
                 >
                   <X size={20} />
                 </button>

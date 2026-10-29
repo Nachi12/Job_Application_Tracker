@@ -6,7 +6,7 @@ interface Props {
   jobs: JobApplication[];
 }
 
-const COLORS = ['#834DFB', '#3B82F6', '#F0E100', '#10B981', '#F43F5E', '#A897D8'];
+const COLORS = ['#183451', '#A9501C', '#D4AF83', '#356E9F', '#C25E24', '#6E5D46'];
 
 export default function StatusDistributionChart({ jobs }: Props) {
   const counts: Record<string, number> = {
@@ -62,19 +62,19 @@ export default function StatusDistributionChart({ jobs }: Props) {
               </Pie>
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#18102B',
-                  borderColor: '#834DFB',
+                  backgroundColor: '#183451',
+                  borderColor: '#D4AF83',
                   borderRadius: '12px',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4)',
                   padding: '8px 12px'
                 }}
                 itemStyle={{
-                  color: '#F5F3FF',
+                  color: '#FAF7F2',
                   fontSize: '12px',
                   fontWeight: '700'
                 }}
                 labelStyle={{
-                  color: '#F0E100',
+                  color: '#D4AF83',
                   fontSize: '12px',
                   fontWeight: '800'
                 }}

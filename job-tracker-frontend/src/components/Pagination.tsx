@@ -17,14 +17,14 @@ export default function Pagination({ page, total, pageSize, onChange }: Props) {
         <button
           disabled={page === 1}
           onClick={() => onChange(page - 1)}
-          className="rounded-md border border-slate-200 px-2 py-1 text-xs disabled:opacity-50 dark:border-slate-700"
+          className="rounded-lg border border-[#D4AF83]/50 bg-white/60 dark:bg-[#11253A] px-2.5 py-1 text-xs text-[#183451] dark:text-[#FAF7F2] hover:border-[#A9501C] hover:text-[#A9501C] disabled:opacity-40 disabled:cursor-not-allowed transition"
         >
           Previous
         </button>
         <button
           disabled={page === totalPages}
           onClick={() => onChange(page + 1)}
-          className="rounded-md border border-slate-200 px-2 py-1 text-xs disabled:opacity-50 dark:border-slate-700"
+          className="rounded-lg border border-[#D4AF83]/50 bg-white/60 dark:bg-[#11253A] px-2.5 py-1 text-xs text-[#183451] dark:text-[#FAF7F2] hover:border-[#A9501C] hover:text-[#A9501C] disabled:opacity-40 disabled:cursor-not-allowed transition"
         >
           Next
         </button>
