@@ -113,7 +113,9 @@ export default function LoginPage() {
     } catch (error: any) {
       console.error('Demo login error:', error);
       let msg = 'Failed to connect to demo account.';
-      if (error?.response?.data?.error) {
+      if (!error?.response) {
+        msg = 'Unable to reach backend API. Check that your backend is deployed and VITE_API_BASE_URL is set in Netlify.';
+      } else if (error?.response?.data?.error) {
         msg = error.response.data.error;
       }
       setErrorMessage(msg);

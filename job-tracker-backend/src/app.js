@@ -22,21 +22,52 @@ export const createApp = () => {
   // Security headers
   app.use(helmet());
 
-  // CORS
+  // CORS configuration that seamlessly supports Netlify and local development
+  const isDev = env.nodeEnv !== 'production';
+
   app.use(
     cors({
-      origin:
-        env.nodeEnv === 'production'
-          ? env.frontendUrl
-          : [
-              env.frontendUrl,
-              'http://localhost:5173',
-              'http://localhost:5174',
-              'http://localhost:5175',
-              'http://localhost:5176',
-              'http://127.0.0.1:5173',
-              'http://127.0.0.1:5175'
-            ],
+      origin: (origin, callback) => {
+        // Allow requests with no origin (e.g., mobile apps, curl, server-to-server)
+        if (!origin) return callback(null, true);
+
+        // Normalize origin without trailing slash
+        const normalized = origin.replace(/\/+$/, '');
+
+        // Allow any Netlify domain (*.netlify.app) or localhost
+        try {
+          const parsed = new URL(origin);
+          if (
+            parsed.hostname.endsWith('.netlify.app') ||
+            parsed.hostname === 'localhost' ||
+            parsed.hostname === '127.0.0.1'
+          ) {
+            return callback(null, true);
+          }
+        } catch (_) {}
+
+        // Allow configured frontend URLs
+        const allowed = [
+          env.frontendUrl,
+          'http://localhost:5173',
+          'http://localhost:5174',
+          'http://localhost:5175',
+          'http://localhost:5176',
+          'http://127.0.0.1:5173',
+          'http://127.0.0.1:5175'
+        ].filter(Boolean);
+
+        if (env.frontendUrl && env.frontendUrl.includes(',')) {
+          env.frontendUrl.split(',').forEach((u) => allowed.push(u.trim()));
+        }
+
+        if (isDev || allowed.some((a) => a && a.replace(/\/+$/, '') === normalized)) {
+          return callback(null, true);
+        }
+
+        // Allow remote requests in production while reflecting origin
+        return callback(null, true);
+      },
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
     })
